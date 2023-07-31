@@ -1,0 +1,33 @@
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    master:  # 3.0 Datasource
+
+      url: jdbc:mysql://27.151.6.66:3306/jkapp_1630042506706026497?serverTimezone=GMT%2B8&useSSL=false&characterEncoding=UTF-8
+      username: root
+      password: ZSCN888.
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      druid:
+      # 超过时间限制是否回收
+      remove-abandoned: true
+      # 超时时间；单位为秒。180秒=3分钟
+      remove-abandoned-timeout: 180
+      # 关闭abanded连接时输出错误日志
+      log-abandoned: true
+
+    second: # 2.0 Datasource
+      url: jdbc:mysql://121.204.146.133:3306/sxrtu?serverTimezone=GMT%2B8&useSSL=false&characterEncoding=UTF-8
+      username: root
+      password: Xmsx123!@#
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      druid:
+      # 超过时间限制是否回收
+      remove-abandoned: true
+      # 超时时间；单位为秒。180秒=3分钟
+      remove-abandoned-timeout: 180
+      # 关闭abanded连接时输出错误日志
+      log-abandoned: true
+
+mybatis:
+  mapper-locations: classpath:mapper/master/*.xml  #对应mapper映射xml文件所在路径
+  type-aliases-package: com.example.jiangshan.entity  #对应实体类路径
