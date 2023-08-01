@@ -13,6 +13,8 @@ import java.util.List;
 public interface SensorMapper {
 
     /*根据类型获得传感器列表333222111*/
+    /*根据类型获得传感器列表333222111*/
+    /*根据类型获得传感器列表333222111*/
     List<String> selectSensorIdList(@Param("sensorType") String sensorType);
 
     /*气象传感器最新数据*/
