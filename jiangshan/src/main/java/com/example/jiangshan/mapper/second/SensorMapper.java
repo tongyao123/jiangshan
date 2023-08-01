@@ -12,12 +12,15 @@ import java.util.List;
 @Mapper
 public interface SensorMapper {
 
-    /*根据类型获得传感器列表*/
+    /*根据类型获得传感器列表111111*/
     List<String> selectSensorIdList(@Param("sensorType") String sensorType);
 
+    /*气象传感器最新数据*/
+    HashMap selectWeatherSensorLatestData(@Param("weatherSensorId") String sensorId);
 
-    /*传感器最新数据*/
-    HashMap selectSensorData(@Param("weatherSensorId") String sensorType,@Param("sensorId") String sensorId);
+    /*土壤传感器最新数据*/
+    HashMap selectSoilSensorLatestData(@Param("soilSensorId") String sensorId);
 
+    List<HashMap> selectSensorCurve(@Param("sensorTable") String sensorTable,@Param("sensorId") String sensorID,@Param("curveType") String curveType,@Param("curveName") String curveType1);
 
 }

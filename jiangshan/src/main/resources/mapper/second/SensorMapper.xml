@@ -8,4 +8,17 @@
     <select id="selectSensorData" parameterType="java.lang.String" resultType="java.util.HashMap">
         SELECT STCD as '传感器ID',TM as '时间点',DRP AS '5分钟时段雨量',DYP ,UC AS '风向',US AS '风速',AI AS '气温',MST AS '空气湿度',FL AS '气压',GZ AS '光照',INTV  FROM `st_pptn_r` where STCD= ${weatherSensorId}  order by TM desc limit 1
     </select>
+
+    <select id="selectWeatherSensorLatestData" parameterType="java.lang.String" resultType="java.util.HashMap">
+        SELECT STCD as '传感器ID',TM as '时间点',DRP AS '5分钟时段雨量',DYP AS DYP,UC AS '风向',US AS '风速',AI AS '气温',MST AS '空气湿度',FL AS '气压',GZ AS '光照',INTV AS INTV  FROM `st_pptn_r` where STCD= #{weatherSensorId}  order by TM desc limit 1
+    </select>
+
+    <select id="selectSoilSensorLatestData" parameterType="java.lang.String" resultType="java.util.HashMap">
+        SELECT STCD as  '传感器ID', TM  as '时间',GTP as '土壤温度',M10 as '土壤湿度',COND as '电导率',PH as 'PH值',TN as '氮',TP as '磷',K as '钾',VT as '电压' FROM st_soil_r  where STCD= #{soilSensorId}  order by TM desc limit 1
+    </select>
+
+    <select id="selectSensorCurve" parameterType="java.lang.String" resultType="java.util.HashMap">
+        SELECT STCD  as '传感器ID', TM  as '时间',${curveType} as ${curveName}  FROM ${sensorTable}  where STCD= #{sensorId}  order by TM desc limit 15
+</select>
+
 </mapper>
