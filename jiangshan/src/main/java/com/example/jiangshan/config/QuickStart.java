@@ -1,5 +1,6 @@
-package com.example.jiangshan.Data;
+package com.example.jiangshan.config;
 
+import com.example.jiangshan.config.JSAPI;
 import com.wechat.pay.java.core.Config;
 import com.wechat.pay.java.core.RSAAutoCertificateConfig;
 import com.wechat.pay.java.service.payments.jsapi.JsapiService;
@@ -36,8 +37,8 @@ public class QuickStart {
     Amount amount = new Amount();
     amount.setTotal(100);
     request.setAmount(amount);
-    request.setAppid("wxed05c9e3b45e9aa8");
-    request.setMchid("1636296954");
+    request.setAppid(JSAPI.jiangshanAppId);
+    request.setMchid(merchantId);
     request.setDescription("测试商品标题");
     request.setNotifyUrl("https://www.weixin.qq.com/wxpay/pay.php");
     request.setOutTradeNo("out_trade_no_001");

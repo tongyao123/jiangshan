@@ -1,4 +1,4 @@
-package com.example.jiangshan.service.master;
+package com.example.jiangshan.service.master.screen;
 
 import com.example.jiangshan.entity.CulturalTourismStatistics;
 import com.example.jiangshan.mapper.master.CulturalTourismMapper;

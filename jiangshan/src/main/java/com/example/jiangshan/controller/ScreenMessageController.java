@@ -2,7 +2,7 @@ package com.example.jiangshan.controller;
 
 import com.example.jiangshan.entity.AgricultureStatistics;
 import com.example.jiangshan.entity.CulturalTourismStatistics;
-import com.example.jiangshan.service.master.*;
+import com.example.jiangshan.service.master.screen.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.*;

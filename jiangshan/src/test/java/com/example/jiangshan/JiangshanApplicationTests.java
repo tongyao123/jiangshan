@@ -51,11 +51,11 @@ public class JiangshanApplicationTests {
         Amount amount = new Amount();
         amount.setTotal(100);
         request.setAmount(amount);
-        request.setAppid("wxed05c9e3b45e9aa8");
-        request.setMchid("1636296954");
+        request.setAppid(JSAPI.jiangshanAppId);
+        request.setMchid(merchantId);
         request.setDescription("测试商品标题");
         request.setNotifyUrl("https://www.weixin.qq.com/wxpay/pay.php");
-        request.setOutTradeNo("out_trade_no_20230803001");
+        request.setOutTradeNo("out_trade_no_20230804002");
         Payer payer = new Payer();
         payer.setOpenid("o18cr5WOEt64u1l1Aud_iAOXd8TI");
         request.setPayer(payer);
