@@ -1,6 +1,9 @@
 package com.example.jiangshan;
 
 import com.example.jiangshan.Data.JSAPI;
+import com.example.jiangshan.service.master.screen.TalentsService;
+import com.example.jiangshan.service.master.wechat.WeChatAuthService;
+import  com.example.jiangshan.service.master.wechat.WeChatAuthService;
 import com.wechat.pay.java.core.Config;
 import com.wechat.pay.java.core.RSAAutoCertificateConfig;
 import com.wechat.pay.java.service.payments.jsapi.JsapiService;
@@ -8,8 +11,9 @@ import com.wechat.pay.java.service.payments.jsapi.model.Amount;
 import com.wechat.pay.java.service.payments.jsapi.model.Payer;
 import com.wechat.pay.java.service.payments.jsapi.model.PrepayRequest;
 import com.wechat.pay.java.service.payments.jsapi.model.PrepayResponse;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 @SpringBootTest
 public class JiangshanApplicationTests {
@@ -29,38 +33,21 @@ public class JiangshanApplicationTests {
      * 商户APIV3密钥
      */
     public static String apiV3key = JSAPI.apiV3key;
+    private WeChatAuthService weChatAuthService;
+    private TalentsService talentsService;
 
     @Test
-    void contextLoads() {
+    public void contextLoads() {
     }
 
     @Test
     public void test1() {
-        // 使用自动更新平台证书的RSA配置
-        // 一个商户号只能初始化一个配置，否则会因为重复的下载任务报错
-        Config config =
-                new RSAAutoCertificateConfig.Builder()
-                        .merchantId(JSAPI.merchantId)
-                        .privateKeyFromPath(JSAPI.privateKeyPath)
-                        .merchantSerialNumber(JSAPI.merchantSerialNumber)
-                        .apiV3Key(JSAPI.apiV3key)
-                        .build();
-        JsapiService service = new JsapiService.Builder().config(config).build();
-        // request.setXxx(val)设置所需参数，具体参数可见Request定义
-        PrepayRequest request = new PrepayRequest();
-        Amount amount = new Amount();
-        amount.setTotal(100);
-        request.setAmount(amount);
-        request.setAppid(JSAPI.jiangshanAppId);
-        request.setMchid(merchantId);
-        request.setDescription("测试商品标题");
-        request.setNotifyUrl("https://www.weixin.qq.com/wxpay/pay.php");
-        request.setOutTradeNo("out_trade_no_20230804002");
-        Payer payer = new Payer();
-        payer.setOpenid("o18cr5WOEt64u1l1Aud_iAOXd8TI");
-        request.setPayer(payer);
-        PrepayResponse response = service.prepay(request);
-        System.out.println(response.getPrepayId());
+        talentsService.getTalentsStatistics();
+        System.out.println("begin-------------------------------------------------");
+        String url = weChatAuthService.getAuthorizeUrl("17750244312");
+        System.out.println(weChatAuthService.getAccessToken(url));
+        System.out.println("begin-------------------------------------------------");
     }
+
 
 }

@@ -41,7 +41,7 @@ public class QuickStart {
     request.setMchid(merchantId);
     request.setDescription("测试商品标题");
     request.setNotifyUrl("https://www.weixin.qq.com/wxpay/pay.php");
-    request.setOutTradeNo("out_trade_no_001");
+    request.setOutTradeNo("out_trade_no_012");
     Payer payer = new Payer();
     payer.setOpenid("o18cr5WOEt64u1l1Aud_iAOXd8TI");
     request.setPayer(payer);
