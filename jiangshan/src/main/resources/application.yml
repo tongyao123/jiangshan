@@ -31,3 +31,5 @@ spring:
 mybatis:
   mapper-locations: classpath:mapper/master/*.xml  #对应mapper映射xml文件所在路径
   type-aliases-package: com.example.jiangshan.entity  #对应实体类路径
+  configuration:
+      log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

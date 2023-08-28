@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.jiangshan.mapper.master.AgricultureMapper">
+    <select id="plantation" resultType="java.util.HashMap">
+        SELECT count(1) as amount, if(sum(a.area) is null,0,sum(a.area)) as area,if(sum(b.worker_num) is null,0,sum(b.worker_num)) as worker_num
+        FROM t_product a
+        inner join
+        t_planting_industry b on a.obj_id = b.id
+
+        <where>
+            <if test=" town != '' and town!= null ">
+                and a.town = #{town}
+            </if>
+            <if test=" village != '' and village!= null">
+                and a.village = #{village}
+            </if>
+        </where>
+
+    </select>
+
+    <select id="farm" resultType="java.util.HashMap">
+        SELECT count(1) as amount,if(sum(a.area) is null,0,sum(a.area)) as area,if(sum(b.worker_num) is null,0,sum(b.worker_num)) as worker_num
+        FROM t_product a
+                 inner join t_cultivation b on a.obj_id = b.id
+
+        <where>
+            <if test=" town != '' and town!= null ">
+                and a.town = #{town}
+            </if>
+            <if test=" village != '' and village!= null">
+                and a.village = #{village}
+            </if>
+        </where>
+
+    </select>
+
+    <select id="tea" resultType="java.util.HashMap">
+        select count(1) as amount,if(sum(b.area) is null,0,sum(b.area)) as area, if(sum(ylut * b.area) is null,0, sum(ylut * b.area)) as yield
+        from t_tea b inner join t_product a on b.id=a.obj_id
+        <where>
+            <if test=" town != '' and town!= null ">
+                and a.town = #{town}
+            </if>
+            <if test=" village != '' and village!= null">
+                and a.village = #{village}
+            </if>
+        </where>
+
+    </select>
+
+    <select id="agricultureDetailList" resultType="java.util.HashMap">
+        select id,
+        case type when 8 then "斜背茶" when 11 then "养殖场" when 12 then "果园/茶园" when 13 then "种植场" end as type,
+        name,
+        address,
+        if(details is null, '', details) as details,
+        addArr,
+        longitude,
+        latitude,
+        image,
+        if(video is null, '', video) as video,
+        if(vRaddress is null, '', vRaddress) as vRaddress
+        from t_product a
+        <where>type in (8, 11, 12, 13)
+            <if test=" town != '' and town!= null ">
+                and a.town = #{town}
+            </if>
+            <if test=" village != '' and village!= null">
+                and a.village = #{village}
+            </if>
+        </where>
+    </select>
+</mapper>
