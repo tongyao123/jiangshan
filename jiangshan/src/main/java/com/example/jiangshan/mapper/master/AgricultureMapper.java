@@ -8,6 +8,7 @@ import java.util.List;
 
 @Mapper
 public interface AgricultureMapper {
+//    查询种植业数据
     @Select("SELECT count(1) as amount,sum(a.area) as area ,sum(b.worker_num) as worker_num FROM t_product a inner join t_planting_industry b on a.obj_id=b.id")
     List<HashMap> plantation();
 
