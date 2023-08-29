@@ -2,6 +2,87 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.example.jiangshan.mapper.master.AttractInvestmentMapper">
     <select id="villageAttractInvestmentCoordinate" parameterType="java.lang.String" resultType="java.util.HashMap">
-        select a.id,case a.type when 10 then "规划招商资产" end as type,area,a.name,address,details,addArr,longitude,latitude,image,if(video is null,'',video ) as  video,if(vRaddress is null,'',vRaddress ) as vRaddress from t_product a left join t_future_product b on a.obj_id=b.id where a.type=10 and b.village = #{village}
+        select a.id,
+               case a.type when 10 then "规划招商资产" end as type,
+               area,
+               a.name,
+               address,
+               details,
+               addArr,
+               longitude,
+               latitude,
+               image,
+               if(video is null, '', video)          as video,
+               if(vRaddress is null, '', vRaddress)  as vRaddress
+        from t_product a
+                 left join t_future_product b on a.obj_id = b.id
+        where a.type = 10
+          and b.village = #{village}
+    </select>
+
+    <select id="villageList" parameterType="java.lang.String" resultType="java.util.HashMap">
+        SELECT a.id, a.com_village, sum(c.area) as area, sum(b.fund_amount) as fund_amount
+        FROM t_future_product b
+                 LEFT JOIN `t_village` a on b.village = a.id
+                 LEFT JOIN t_product c on b.id = c.obj_id
+        GROUP BY a.id
+    </select>
+    <select id="attractInvestmentDetailList" resultType="java.util.HashMap">
+        select id,case type when 10 then "规划招商资产" end as type,area,name,address,if(details is null,'',details ) as
+        details,addArr,longitude,latitude,image,if(video is null,'',video ) as video,if(vRaddress is null,'',vRaddress )
+        as vRaddress from t_product
+        <where>
+            type=10
+            <if test=" town != '' and town!= null ">
+                and town = #{town}
+            </if>
+            <if test=" village != '' and village!= null">
+                and village = #{village}
+            </if>
+        </where>
+    </select>
+    <select id="attractInvestmentList" resultType="java.util.HashMap">
+        SELECT count(1) AS number,
+        DATE_FORMAT(b.invest_time, "%Y-%m") AS yearOfMonth,
+        DATE_FORMAT(b.invest_time, "%m") AS month,sum(b.invest_amount) AS amount
+        FROM t_future_product a right join t_investment_history b
+        on a.id=b.product_id left join t_product c on a.id= c.obj_id
+        <where>
+            (a.plant='2' or a.plant='3')
+            <if test=" town != '' and town!= null ">
+                and c.town = #{town}
+            </if>
+            <if test=" village != '' and village!= null">
+                and c.village = #{village}
+            </if>
+        </where>
+        group by DATE_FORMAT(b.invest_time, "%Y-%m"), DATE_FORMAT(b.invest_time, "%m") limit 10, 6
+    </select>
+    <select id="attractInvestmentStatistics" resultType="java.util.HashMap">
+        select case
+        when type_in_future = "1" then "计划项目"
+        when type_in_future = "2" then "拟签约项目"
+        when type_in_future = "3" then "已签约项目"
+        else "未明确状态项目" end as typeInFuture,
+        count(1) as num,
+        DATE_FORMAT(now(), "%Y") as investTime,
+        sum(b.invest_amount) as investAmount
+        from t_future_product a
+        right join t_investment_history b on a.id = b.product_id
+        left join t_product c on a.id = c.obj_id
+        <where>
+            where (a.plant = '2' or a.plant = '3')
+            and DATE_FORMAT(b.invest_time, "%Y") = DATE_FORMAT(now(), "%Y")
+            and type_in_future = "2"
+            <if test=" town != '' and town!= null ">
+                and c.town = #{town}
+            </if>
+            <if test=" village != '' and village!= null">
+                and c.village = #{village}
+            </if>
+            GROUP BY type_in_future
+        </where>
+
+
     </select>
 </mapper>

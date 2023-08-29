@@ -3,6 +3,7 @@ package com.example.jiangshan.controller;
 import com.example.jiangshan.entity.AgricultureStatistics;
 import com.example.jiangshan.entity.CulturalTourismStatistics;
 import com.example.jiangshan.service.master.screen.*;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.*;
@@ -34,8 +35,8 @@ public class ScreenMessageController {
 
     @ResponseBody
     @RequestMapping(value = "/getAgricultureStatistics")
-    public AgricultureStatistics getAgricultureStatistics() throws Exception {
-        return agricultureService.agricultureStatistics();
+    public HashMap getAgricultureStatistics(@PathVariable @RequestParam("town")  String town,@PathVariable @RequestParam("village")  String village) throws Exception {
+        return agricultureService.agricultureStatistics(town,village);
     }
 
     @ResponseBody
@@ -46,8 +47,8 @@ public class ScreenMessageController {
 
     @ResponseBody
     @RequestMapping(value = "/getAttractInvestmentStatistics")
-    public HashMap getAttractInvestmentStatistics() throws Exception {
-        return attractInvestmentService.attractInvestmentStatistics();
+    public HashMap getAttractInvestmentStatistics(@Param("town")String town, @Param("village") String village) throws Exception {
+        return attractInvestmentService.attractInvestmentStatistics(town,village);
     }
 
     @ResponseBody
@@ -70,8 +71,8 @@ public class ScreenMessageController {
 
     @ResponseBody
     @RequestMapping(value = "/getAgricultureCoordinate")
-    public List getAgricultureDetailList() {
-        return agricultureService.agricultureDetailList();
+    public List getAgricultureDetailList(@RequestParam("town")  String town,@RequestParam("village")  String village)  throws Exception {
+        return agricultureService.agricultureDetailList(town,village);
     }
 
     @ResponseBody
@@ -88,8 +89,8 @@ public class ScreenMessageController {
 
     @ResponseBody
     @RequestMapping(value = "/getAttractInvestmentCoordinate")
-    public List getAttractInvestmentCoordinate() {
-        return attractInvestmentService.attractInvestmentDetailList();
+    public List getAttractInvestmentCoordinate(@Param("town")String town, @Param("village") String village) {
+        return attractInvestmentService.attractInvestmentDetailList(town,village);
     }
 
     @ResponseBody
