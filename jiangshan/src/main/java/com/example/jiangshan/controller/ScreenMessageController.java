@@ -41,8 +41,8 @@ public class ScreenMessageController {
 
     @ResponseBody
     @RequestMapping(value = "/getCulturalTourismStatistics")
-    public CulturalTourismStatistics getCulturalTourismStatistics() throws Exception {
-        return culturalTourismService.culturalTourismStatistics();
+    public CulturalTourismStatistics getCulturalTourismStatistics(@Param("town")String town, @Param("village") String village) throws Exception {
+        return culturalTourismService.culturalTourismStatistics(town,village);
     }
 
     @ResponseBody
@@ -77,14 +77,14 @@ public class ScreenMessageController {
 
     @ResponseBody
     @RequestMapping(value = "/getCulturalCoordinate")
-    public List getCulturalDetailList() {
-        return culturalTourismService.culturalDetailList();
+    public List getCulturalDetailList(@Param("town")String town, @Param("village") String village) {
+        return culturalTourismService.culturalDetailList(town,village);
     }
 
     @ResponseBody
     @RequestMapping(value = "/getTourismCoordinate")
-    public List getTourismDetailList() {
-        return culturalTourismService.tourismDetailList();
+    public List getTourismDetailList(@Param("town")String town, @Param("village") String village) {
+        return culturalTourismService.tourismDetailList(town,village);
     }
 
     @ResponseBody

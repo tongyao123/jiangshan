@@ -70,8 +70,7 @@
         from t_future_product a
         right join t_investment_history b on a.id = b.product_id
         left join t_product c on a.id = c.obj_id
-        <where>
-            where (a.plant = '2' or a.plant = '3')
+        <where> (a.plant = '2' or a.plant = '3')
             and DATE_FORMAT(b.invest_time, "%Y") = DATE_FORMAT(now(), "%Y")
             and type_in_future = "2"
             <if test=" town != '' and town!= null ">

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.jiangshan.mapper.master.CulturalTourismMapper">
+    <select id="tourismDetailList" parameterType="java.lang.String" resultType="java.util.HashMap">
+        select id,
+        case type when 5 then "康养基地" when 6 then "酒店/民宿" when 7 then "餐饮" when 9 then "旅游景点" end as type,
+        area,
+        name,
+        address,
+        if(details is null, '', details) as details,
+        addArr,
+        longitude,
+        latitude,
+        image,
+        if(video is null, '', video) as video,
+        if(vRaddress is null, '', vRaddress) as vRaddress
+        from t_product
+        <where>
+            type in (5, 6, 7, 9)
+            <if test=" town != '' and town!= null ">
+                and town = #{town}
+            </if>
+            <if test=" village != '' and village!= null">
+                and village = #{village}
+            </if>
+        </where>
+    </select>
+    <select id="culturalDetailList" resultType="java.util.HashMap">
+        select id,
+        case type when 4 then "文化底蕴" end as type,
+        area,
+        name,
+        address,
+        if(details is null, '', details) as details,
+        addArr,
+        longitude,
+        latitude,
+        image,
+        if(video is null, '', video) as video,
+        if(vRaddress is null, '', vRaddress) as vRaddress
+        from t_product
+        <where>
+            type = 4
+            <if test=" town != '' and town!= null ">
+                and town = #{town}
+            </if>
+            <if test=" village != '' and village!= null">
+                and village = #{village}
+            </if>
+        </where>
+    </select>
+    <select id="CulturalTourismCount" resultType="java.lang.Integer">
+        select count(1) from t_product
+        <where>
+            type= #{productType}
+            <if test=" town != '' and town!= null ">
+                and town = #{town}
+            </if>
+            <if test=" village != '' and village!= null">
+                and village = #{village}
+            </if>
+        </where>
+    </select>
+    <select id="getTurnoverList" resultType="java.util.HashMap">
+        SELECT DATE_FORMAT(order_time, "%Y-%m") AS orderTime, ROUND(SUM(order_total), 2) AS orderTotal
+        FROM t_consumption a
+                 left join t_product b on a.product_id = b.id
+        <where>
+            <if test=" town != '' and town!= null ">
+                and b.town = #{town}
+            </if>
+            <if test=" village != '' and village!= null">
+                and b.village = #{village}
+            </if>
+        </where>
+        GROUP BY DATE_FORMAT(order_time, "%Y-%m")
+        order by DATE_FORMAT(order_time, "%Y-%m")
+    </select>
+</mapper>
