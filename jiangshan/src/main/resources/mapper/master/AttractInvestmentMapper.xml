@@ -44,7 +44,7 @@
     <select id="attractInvestmentList" resultType="java.util.HashMap">
         SELECT count(1) AS number,
         DATE_FORMAT(b.invest_time, "%Y-%m") AS yearOfMonth,
-        DATE_FORMAT(b.invest_time, "%m") AS month,sum(b.invest_amount) AS amount
+        DATE_FORMAT(b.invest_time, "%m") AS month,sum(a.fund_amount) AS amount
         FROM t_future_product a right join t_investment_history b
         on a.id=b.product_id left join t_product c on a.id= c.obj_id
         <where>
