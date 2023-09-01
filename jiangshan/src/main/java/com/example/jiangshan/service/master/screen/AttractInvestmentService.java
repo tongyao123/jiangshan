@@ -10,8 +10,11 @@ import java.util.List;
 
 @Service
 public class AttractInvestmentService {
-    @Autowired
-    private AttractInvestmentMapper attractInvestmentMapper;
+    private final AttractInvestmentMapper attractInvestmentMapper;
+
+    public AttractInvestmentService(AttractInvestmentMapper attractInvestmentMapper) {
+        this.attractInvestmentMapper = attractInvestmentMapper;
+    }
 
     public List getStatistics(String typeInFuture,@Param("town")String town, @Param("village") String village) {
         return attractInvestmentMapper.attractInvestmentStatistics(typeInFuture,town,village);
@@ -30,6 +33,7 @@ public class AttractInvestmentService {
     public List villageList() {
         return attractInvestmentMapper.villageList();
     }
+
     public HashMap attractInvestmentStatistics(@Param("town")String town, @Param("village") String village) {
         HashMap AttractInvestment = new HashMap();
         AttractInvestment.put("planProject", this.getStatistics("1",town,village));

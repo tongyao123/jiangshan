@@ -10,8 +10,11 @@ import java.util.List;
 
 @Service
 public class PartyService {
-    @Autowired
-    private PartyMapper partyMapper;
+    private final PartyMapper partyMapper;
+
+    public PartyService(PartyMapper partyMapper) {
+        this.partyMapper = partyMapper;
+    }
 
     public Integer getPartyMembersNumber() {
         return partyMapper.getPartyMembersNumber();

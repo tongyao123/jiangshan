@@ -10,23 +10,26 @@ import java.util.List;
 
 @Service
 public class PlanningProductService {
-    @Autowired
-    private PlanningProductMapper planningProductMapper;
+    private final PlanningProductMapper planningProductMapper;
+
+    public PlanningProductService(PlanningProductMapper planningProductMapper) {
+        this.planningProductMapper = planningProductMapper;
+    }
 
     public List getStatistics(@Param("typeInFuture") String typeInFuture, @Param("town") String town, @Param("village") String village) {
         return planningProductMapper.getAttractInvestmentStatistics(typeInFuture, town, village);
     }
 
-    public List getList() {
-        return planningProductMapper.getAttractInvestmentList();
+    public List getList(@Param("town") String town, @Param("village") String village) {
+        return planningProductMapper.getAttractInvestmentList(town, village);
     }
 
     public HashMap planningProductStatistics(@Param("town") String town, @Param("village") String village) {
-        HashMap AttractInvestment = new HashMap();
-        AttractInvestment.put("planProject", this.getStatistics("1", town, village));
-        AttractInvestment.put("completedProject", this.getStatistics("3", town, village));
-        AttractInvestment.put("ongoingProject", this.getStatistics("2", town, village));
-        AttractInvestment.put("AttractInvestmentList", this.getList());
-        return AttractInvestment;
+        HashMap<String,List> planningProduct = new HashMap();
+        planningProduct.put("planProject", this.getStatistics("1",town,village));
+        planningProduct.put("completedProject", this.getStatistics("3",town,village));
+        planningProduct.put("ongoingProject", this.getStatistics("2",town,village));
+        planningProduct.put("AttractInvestmentList", this.getList(town,village));
+        return planningProduct;
     }
 }

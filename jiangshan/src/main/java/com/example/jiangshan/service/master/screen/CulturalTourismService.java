@@ -10,8 +10,11 @@ import java.util.HashMap;
 import java.util.List;
 @Service
 public class CulturalTourismService {
-    @Autowired
-    private CulturalTourismMapper culturalTourismMapper;
+    private final CulturalTourismMapper culturalTourismMapper;
+
+    public CulturalTourismService(CulturalTourismMapper culturalTourismMapper) {
+        this.culturalTourismMapper = culturalTourismMapper;
+    }
 
     public Integer getCulturalTourismCount(String productType,@Param("town")String town, @Param("village") String village) {
         return culturalTourismMapper.CulturalTourismCount(productType,town,village);

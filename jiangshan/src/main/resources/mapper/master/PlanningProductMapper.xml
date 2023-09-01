@@ -4,15 +4,15 @@
 
     <select id="getAttractInvestmentStatistics" resultType="java.util.HashMap">
         select case
-                   when type_in_future = "1" then "计划项目"
-                   when type_in_future = "2" then "拟签约项目"
-                   when type_in_future = "3" then "已签约项目"
-                   else "未明确状态项目" end   as typeInFuture,
-               count(1)                 as num,
-               DATE_FORMAT(now(), "%Y") as investTime,
-               sum(a.fund_amount)       as investAmount
+        when type_in_future = "1" then "计划项目"
+        when type_in_future = "2" then "拟签约项目"
+        when type_in_future = "3" then "已签约项目"
+        else "未明确状态项目" end as typeInFuture,
+        count(1) as num,
+        DATE_FORMAT(now(), "%Y") as investTime,
+        sum(a.fund_amount) as investAmount
         from t_future_product a
-                 left join t_product b on a.id = b.obj_id
+        left join t_product b on a.id = b.obj_id
         <where>
             (a.plant = '1' or a.plant = '3')
             and type_in_future = #{typeInFuture}
@@ -24,5 +24,22 @@
             </if>
         </where>
         GROUP BY type_in_future
+    </select>
+    <select id="getAttractInvestmentList" resultType="java.util.HashMap">
+        SELECT count(1)                            AS number,
+               DATE_FORMAT(b.invest_time, "%Y-%m") AS yearOfMonth,
+               DATE_FORMAT(b.invest_time, "%m") AS month,sum(a.fund_amount)  AS amount
+        FROM t_future_product a right join t_investment_history b
+        on a.id=b.product_id left join t_product c on a.id= c.obj_id
+            <where>
+        (a.plant = '1' or a.plant = '3')
+        <if test=" town != '' and town!= null ">
+            and c.town = #{town}
+        </if>
+        <if test=" village != '' and village!= null">
+            and c.village = #{village}
+        </if>
+    </where>
+        group by DATE_FORMAT(b.invest_time, "%Y-%m"), DATE_FORMAT(b.invest_time, "%m") limit 10, 6
     </select>
 </mapper>

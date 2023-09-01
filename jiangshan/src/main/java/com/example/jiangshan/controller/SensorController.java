@@ -2,7 +2,6 @@ package com.example.jiangshan.controller;
 
 
 import com.example.jiangshan.service.second.SensorService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
@@ -19,8 +18,11 @@ import java.util.List;
 @CrossOrigin
 public class SensorController {
 
-    @Autowired
-    private SensorService sensorService;
+    private final SensorService sensorService;
+
+    public SensorController(SensorService sensorService) {
+        this.sensorService = sensorService;
+    }
 
 
     /*获取传感器列表*/

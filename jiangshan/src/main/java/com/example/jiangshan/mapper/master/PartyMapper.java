@@ -2,7 +2,6 @@ package com.example.jiangshan.mapper.master;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
-
 import java.util.HashMap;
 import java.util.List;
 

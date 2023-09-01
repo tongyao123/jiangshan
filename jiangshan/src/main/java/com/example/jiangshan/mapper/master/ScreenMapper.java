@@ -16,6 +16,6 @@ public interface ScreenMapper {
 
     HashMap selectScreenContent(@Param("contentType") String contentType);
 
-    @Select("SELECT *,b.color as color,b.icon as icon FROM t_product a left join t_product_color b on a.type=b.produId WHERE a.TYPE != ''")
+
     List<HashMap> selectScreenCoordinate();
 }

@@ -11,8 +11,11 @@ import java.util.*;
 @Transactional
 @Service
 public class AgricultureService implements AgricultureMapper {
-    @Autowired
-    private AgricultureMapper agricultureMapper;
+    private final AgricultureMapper agricultureMapper;
+
+    public AgricultureService(AgricultureMapper agricultureMapper) {
+        this.agricultureMapper = agricultureMapper;
+    }
 
     @Override
     public HashMap plantation(String town, String village) {

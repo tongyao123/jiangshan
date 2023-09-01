@@ -10,8 +10,11 @@ import java.util.List;
 
 @Service
 public class TalentsService {
-    @Autowired
-    private TalentsMapper talentsMapper;
+    private final TalentsMapper talentsMapper;
+
+    public TalentsService(TalentsMapper talentsMapper) {
+        this.talentsMapper = talentsMapper;
+    }
 
     public Integer getTalentsStatistics() {
         return talentsMapper.getTalentsStatistics();
