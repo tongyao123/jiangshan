@@ -3,18 +3,13 @@ package com.example.jiangshan;
 import com.example.jiangshan.Data.JSAPI;
 import com.example.jiangshan.service.master.screen.TalentsService;
 import com.example.jiangshan.service.master.wechat.WeChatAuthService;
-import  com.example.jiangshan.service.master.wechat.WeChatAuthService;
-import com.wechat.pay.java.core.Config;
-import com.wechat.pay.java.core.RSAAutoCertificateConfig;
-import com.wechat.pay.java.service.payments.jsapi.JsapiService;
-import com.wechat.pay.java.service.payments.jsapi.model.Amount;
-import com.wechat.pay.java.service.payments.jsapi.model.Payer;
-import com.wechat.pay.java.service.payments.jsapi.model.PrepayRequest;
-import com.wechat.pay.java.service.payments.jsapi.model.PrepayResponse;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+@RunWith(SpringRunner.class)
 @SpringBootTest
 public class JiangshanApplicationTests {
     /**
@@ -33,8 +28,11 @@ public class JiangshanApplicationTests {
      * 商户APIV3密钥
      */
     public static String apiV3key = JSAPI.apiV3key;
-    private WeChatAuthService weChatAuthService;
-    private TalentsService talentsService;
+    @Autowired
+    WeChatAuthService weChatAuthService;
+    @Autowired
+    TalentsService talentsService;
+
 
     @Test
     public void contextLoads() {
@@ -42,12 +40,10 @@ public class JiangshanApplicationTests {
 
     @Test
     public void test1() {
-        talentsService.getTalentsStatistics();
         System.out.println("begin-------------------------------------------------");
+        System.out.println(talentsService.getTalentsStatistics());
         String url = weChatAuthService.getAuthorizeUrl("17750244312");
         System.out.println(weChatAuthService.getAccessToken(url));
         System.out.println("begin-------------------------------------------------");
     }
-
-
 }
