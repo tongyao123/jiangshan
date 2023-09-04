@@ -17,21 +17,23 @@ import java.util.*;
 @CrossOrigin
 public class ScreenMessageController {
 
-    @Autowired
-    private AgricultureService agricultureService;
-    @Autowired
-    private CulturalTourismService culturalTourismService;
-    @Autowired
-    private AttractInvestmentService attractInvestmentService;
-    @Autowired
-    private PartyService partyService;
-    @Autowired
-    private TalentsService talentsService;
-    @Autowired
-    private PlanningProductService planningProductService;
+    private final AgricultureService agricultureService;
+    private final CulturalTourismService culturalTourismService;
+    private final AttractInvestmentService attractInvestmentService;
+    private final PartyService partyService;
+    private final TalentsService talentsService;
+    private final PlanningProductService planningProductService;
+    private final ScreenService screenService;
 
-    @Autowired
-    private ScreenService screenService;
+    public ScreenMessageController(AgricultureService agricultureService, CulturalTourismService culturalTourismService, AttractInvestmentService attractInvestmentService, PartyService partyService, TalentsService talentsService, PlanningProductService planningProductService, ScreenService screenService) {
+        this.agricultureService = agricultureService;
+        this.culturalTourismService = culturalTourismService;
+        this.attractInvestmentService = attractInvestmentService;
+        this.partyService = partyService;
+        this.talentsService = talentsService;
+        this.planningProductService = planningProductService;
+        this.screenService = screenService;
+    }
 
     @ResponseBody
     @RequestMapping(value = "/getAgricultureStatistics")
