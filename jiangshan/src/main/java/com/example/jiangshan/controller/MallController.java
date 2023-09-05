@@ -16,17 +16,20 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/mall")
 @CrossOrigin
 public class MallController {
-    @Autowired
-    private WeChatAuthService weChatAuthService;
-    @Autowired
-    private MallSelfService mallSelfService;
-    @Autowired
-    private MallOnlineService mallOnlineService;
+    private final WeChatAuthService weChatAuthService;
+    private final MallSelfService mallSelfService;
+    private final MallOnlineService mallOnlineService;
+
+    public MallController(WeChatAuthService weChatAuthService, MallSelfService mallSelfService, MallOnlineService mallOnlineService) {
+        this.weChatAuthService = weChatAuthService;
+        this.mallSelfService = mallSelfService;
+        this.mallOnlineService = mallOnlineService;
+    }
 
     @ResponseBody
     @RequestMapping("/wechat/login")
     public String wechatLogin(String code) {
-       return weChatAuthService.getAccessToken(weChatAuthService.getAuthorizeUrl(code));
+        return weChatAuthService.getAccessToken(weChatAuthService.getAuthorizeUrl(code));
         //return "redirect:" + weChatAuthService.getAuthorizeUrl(userId);
     }
 
@@ -42,14 +45,15 @@ public class MallController {
 
     @ResponseBody
     @RequestMapping("/wechat/paySelf")
-        public PrepayResponse wechatPaySelf(@Param("orderId") String orderId,@Param("orderAmount")  String orderAmount, @Param("description")  String description,@Param("openid")  String openid) throws Exception {
-        return   mallSelfService.wechatPay(orderId,orderAmount,description,openid);
+    public PrepayResponse wechatPaySelf(@Param("orderId") String orderId, @Param("orderAmount") String orderAmount, @Param("description") String description, @Param("openid") String openid) throws Exception {
+        return mallSelfService.wechatPay(orderId, orderAmount, description, openid);
         // 处理用户信息，进行登录逻辑
     }
+
     @ResponseBody
     @RequestMapping("/wechat/payOnline")
-    public PrepayWithRequestPaymentResponse wechatPayOnline(@Param("orderId") String orderId, @Param("orderAmount")  String orderAmount, @Param("description")  String description, @Param("openid")  String openid) throws Exception {
-        return   mallOnlineService.wechatPay(orderId,orderAmount,description,openid);
+    public PrepayWithRequestPaymentResponse wechatPayOnline(@Param("orderId") String orderId, @Param("orderAmount") String orderAmount, @Param("description") String description, @Param("openid") String openid) throws Exception {
+        return mallOnlineService.wechatPay(orderId, orderAmount, description, openid);
         // 处理用户信息，进行登录逻辑
     }
 }
