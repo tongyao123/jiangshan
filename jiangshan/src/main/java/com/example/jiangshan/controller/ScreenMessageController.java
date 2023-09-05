@@ -1,10 +1,8 @@
 package com.example.jiangshan.controller;
 
-import com.example.jiangshan.entity.AgricultureStatistics;
 import com.example.jiangshan.entity.CulturalTourismStatistics;
 import com.example.jiangshan.service.master.screen.*;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,19 +35,19 @@ public class ScreenMessageController {
 
     @ResponseBody
     @RequestMapping(value = "/getAgricultureStatistics")
-    public HashMap getAgricultureStatistics(@PathVariable @RequestParam("town") String town, @PathVariable @RequestParam("village") String village) throws Exception {
+    public HashMap getAgricultureStatistics(@RequestParam(required=false,value="town") String town, @RequestParam(required=false,value="village") String village){
         return agricultureService.agricultureStatistics(town, village);
     }
 
     @ResponseBody
     @RequestMapping(value = "/getCulturalTourismStatistics")
-    public CulturalTourismStatistics getCulturalTourismStatistics(@Param("town") String town, @Param("village") String village) throws Exception {
+    public CulturalTourismStatistics getCulturalTourismStatistics(@RequestParam(required=false,value="town") String town, @RequestParam(required=false,value="village") String village){
         return culturalTourismService.culturalTourismStatistics(town, village);
     }
 
     @ResponseBody
     @RequestMapping(value = "/getAttractInvestmentStatistics")
-    public HashMap getAttractInvestmentStatistics(@Param("town") String town, @Param("village") String village) throws Exception {
+    public HashMap getAttractInvestmentStatistics(@RequestParam(required=false,value="town") String town, @RequestParam(required=false,value="village") String village) {
         return attractInvestmentService.attractInvestmentStatistics(town, village);
     }
 
@@ -67,37 +65,40 @@ public class ScreenMessageController {
 
     @ResponseBody
     @RequestMapping(value = "/getPlanningProductStatistics")
-    public HashMap getPlanningProductStatistics(@RequestParam("town") String town, @RequestParam("village") String village) {
+    public HashMap getPlanningProductStatistics(@RequestParam(required = false,value = "town") String town, @RequestParam(required = false,value ="village") String village) {
         return planningProductService.planningProductStatistics(town, village);
     }
 
     @ResponseBody
     @RequestMapping(value = "/getAgricultureCoordinate")
-    public List getAgricultureDetailList(@RequestParam("town") String town, @RequestParam("village") String village) throws Exception {
+    public List getAgricultureDetailList(@RequestParam(required = false,value = "town") String town, @RequestParam(required = false,value ="village") String village) throws Exception {
+        System.out.println("begin--------------------------------------------------------------");
+        System.out.println(town+"---------------------------------"+village);
+        System.out.println("end----------------------------------------------------------------");
         return agricultureService.agricultureDetailList(town, village);
     }
 
     @ResponseBody
     @RequestMapping(value = "/getCulturalCoordinate")
-    public List getCulturalDetailList(@Param("town") String town, @Param("village") String village) {
+    public List getCulturalDetailList(@RequestParam(required=false,value="town") String town, @RequestParam(required=false,value="village") String village) {
         return culturalTourismService.culturalDetailList(town, village);
     }
 
     @ResponseBody
     @RequestMapping(value = "/getTourismCoordinate")
-    public List getTourismDetailList(@Param("town") String town, @Param("village") String village) {
+    public List getTourismDetailList(@RequestParam(required=false,value="town") String town, @RequestParam(required=false,value="village") String village) {
         return culturalTourismService.tourismDetailList(town, village);
     }
 
     @ResponseBody
     @RequestMapping(value = "/getAttractInvestmentCoordinate")
-    public List getAttractInvestmentCoordinate(@Param("town") String town, @Param("village") String village) {
+    public List getAttractInvestmentCoordinate(@RequestParam(required=false,value="town") String town, @RequestParam(required=false,value="village") String village) {
         return attractInvestmentService.attractInvestmentDetailList(town, village);
     }
 
     @ResponseBody
     @RequestMapping(value = "/getVillageAttractInvestmentCoordinate")
-    public List getAttractInvestmentCoordinate(@RequestBody Map village) throws Exception {
+    public List getAttractInvestmentCoordinate(@RequestBody Map village){
         String villageCode = village.get("village").toString();
         return attractInvestmentService.villageAttractInvestmentCoordinate(villageCode);
     }

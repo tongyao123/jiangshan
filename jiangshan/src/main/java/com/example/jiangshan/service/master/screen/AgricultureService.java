@@ -3,7 +3,6 @@ package com.example.jiangshan.service.master.screen;
 
 import com.example.jiangshan.mapper.master.AgricultureMapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
@@ -31,7 +30,7 @@ public class AgricultureService implements AgricultureMapper {
         return agricultureMapper.tea(town, village);
     }
 
-    public HashMap agricultureStatistics(String town, String village) throws Exception {
+    public HashMap agricultureStatistics(String town, String village) {
 
         HashMap agricultureStatistics = new HashMap();
         HashMap plantation = this.plantation(town, village);
