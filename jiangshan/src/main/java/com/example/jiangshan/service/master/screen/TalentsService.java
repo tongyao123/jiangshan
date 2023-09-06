@@ -30,14 +30,6 @@ public class TalentsService {
 
     public HashMap talentsStatistics(){
         HashMap TalentsStatistics = new HashMap<>();
-        /*TalentsStatistics.put("talentsStatistics", Arrays.asList(new HashMap<String, Object>() {{
-                                                                     put("name", "总人才数");
-                                                                     put("number", talentsStatisticsMapper.getTalentsStatistics().get(0).get("总人才数"));
-                                                                 }},
-                new HashMap<String, Object>() {{
-                    put("name", "总就业数");
-                    put("number", talentsStatisticsMapper.getTalentsStatistics().get(0).get("总就业数"));
-                }}));*/
         TalentsStatistics.put("talentsStatistics", Arrays.asList(new HashMap<String, Object>() {{
                                                                      put("name", "总人才数");
                                                                      put("number", talentsMapper.getTalentsStatistics());

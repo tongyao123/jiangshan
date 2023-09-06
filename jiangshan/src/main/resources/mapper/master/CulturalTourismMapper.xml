@@ -3,7 +3,7 @@
 <mapper namespace="com.example.jiangshan.mapper.master.CulturalTourismMapper">
     <select id="tourismDetailList" parameterType="java.lang.String" resultType="java.util.HashMap">
         select id,
-        case type when 5 then "康养基地" when 6 then "酒店/民宿" when 7 then "餐饮" when 9 then "旅游景点" end as type,
+        case type when 5 then '康养基地' when 6 then '酒店/民宿' when 7 then '餐饮' when 9 then '旅游景点' end as type,
         area,
         name,
         address,
@@ -27,7 +27,7 @@
     </select>
     <select id="culturalDetailList" resultType="java.util.HashMap">
         select id,
-        case type when 4 then "文化底蕴" end as type,
+        case type when 4 then '文化底蕴' end as type,
         area,
         name,
         address,
@@ -62,7 +62,7 @@
         </where>
     </select>
     <select id="getTurnoverList" resultType="java.util.HashMap">
-        SELECT DATE_FORMAT(order_time, "%Y-%m") AS orderTime, ROUND(SUM(order_total), 2) AS orderTotal
+        SELECT DATE_FORMAT(order_time, '%Y-%m') AS orderTime, ROUND(SUM(order_total), 2) AS orderTotal
         FROM t_consumption a
                  left join t_product b on a.product_id = b.id
         <where>
@@ -73,7 +73,7 @@
                 and b.village = #{village}
             </if>
         </where>
-        GROUP BY DATE_FORMAT(order_time, "%Y-%m")
-        order by DATE_FORMAT(order_time, "%Y-%m")
+        GROUP BY DATE_FORMAT(order_time, '%Y-%m')
+        order by DATE_FORMAT(order_time, '%Y-%m')
     </select>
 </mapper>
