@@ -18,8 +18,6 @@ public class WeChatAuthService {
     @Value("${weChat.jiangshanSecret}")
     private String appSecret;
 
-
-
     public String getAuthorizeUrl(String code) {
         // 构建授权 URL
         // ...
@@ -31,7 +29,7 @@ public class WeChatAuthService {
         // 获取 access token
         // ...
         OkHttpClient client = new OkHttpClient();
-        String url = code; // 替换成你的 URL
+        String url = code; // 替换 URL
         Request request = new Request.Builder()
                 .url(url)
                 .build();

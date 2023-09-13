@@ -28,11 +28,7 @@ public class MallSelfService {
 
     private static String privateKey = privateKeyEntity;
 
-
     PrivateKey merchantPrivateKey = PemUtil.loadPrivateKey(privateKey);
-
-
-
 
     public PrepayResponse wechatPay(String orderId, String orderAmount, String description, String openid) throws Exception {
         System.out.println(AppId);
