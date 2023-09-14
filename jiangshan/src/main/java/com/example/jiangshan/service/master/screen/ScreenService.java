@@ -2,6 +2,7 @@ package com.example.jiangshan.service.master.screen;
 
 
 import com.example.jiangshan.mapper.master.ScreenMapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -43,7 +44,6 @@ public class ScreenService {
         if (!Arrays.asList(CONTEXT_TYPE_LIST).contains(contentType)) {
             throw new RuntimeException("Error contentType input! Please check what you entered!");
         }
-
         contentType = contentType + "_content";
         return screenMapper.selectScreenContent(contentType);
     }
@@ -53,10 +53,10 @@ public class ScreenService {
      * @Author: Xiao Lee
      * @Param: []
      * @Return: java.util.List<java.util.HashMap < java.lang.String, java.lang.Object>>
-     * @Description: ScreenService.java
+     * @Description: 根据选择的村镇等级展示对应的大屏所包含的所有点位
      */
-    public List<HashMap<String, Object>> selectScreenCoordinate() {
-        List<HashMap<String, Object>> screenCoordinate = screenMapper.selectScreenCoordinate();
+    public List<HashMap<String, Object>> selectScreenCoordinate(@Param("town") String town, @Param("village") String village) {
+        List<HashMap<String, Object>> screenCoordinate = screenMapper.selectScreenCoordinate(town,village);
         for (HashMap<String, Object> screenCoordinateItem : screenCoordinate) {
             int index = LongToInteger(screenCoordinateItem.get("type"));
             screenCoordinateItem.put("color", COLOR_LIST.get(index));

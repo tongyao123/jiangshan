@@ -30,12 +30,12 @@ public class AgricultureService implements AgricultureMapper {
         return agricultureMapper.tea(town, village);
     }
 
-    public HashMap agricultureStatistics(String town, String village) {
+    public HashMap<String,Object>  agricultureStatistics(String town, String village) {
 
-        HashMap agricultureStatistics = new HashMap();
-        HashMap plantation = this.plantation(town, village);
-        HashMap farm = this.farm(town, village);
-        HashMap tea = this.tea(town, village);
+        HashMap<String,Object> agricultureStatistics = new HashMap();
+        HashMap<String,Object>  plantation = this.plantation(town, village);
+        HashMap<String,Object>  farm = this.farm(town, village);
+        HashMap<String,Object>  tea = this.tea(town, village);
         agricultureStatistics.put("plantationNumber",plantation.get("amount"));
         agricultureStatistics.put("plantationArea",plantation.get("area"));
         agricultureStatistics.put("plantationEmployeesNumber",plantation.get("worker_num"));

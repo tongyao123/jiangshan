@@ -3,7 +3,6 @@ package com.example.jiangshan.service.master.screen;
 import com.example.jiangshan.mapper.master.AttractInvestmentMapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
-
 import java.util.HashMap;
 import java.util.List;
 
@@ -39,8 +38,8 @@ public class AttractInvestmentService implements AttractInvestmentMapper {
     }
 
     // 查看招商资产的统计数据
-    public HashMap attractInvestmentStatistics(@Param("town")String town, @Param("village") String village) {
-        HashMap AttractInvestment = new HashMap();
+    public HashMap<String,Object>  attractInvestmentStatistics(@Param("town")String town, @Param("village") String village) {
+        HashMap<String,Object>  AttractInvestment = new HashMap<>();
         AttractInvestment.put("planProject", this.attractInvestmentStatistics("1",town,village));
         AttractInvestment.put("completedProject", this.attractInvestmentStatistics("3",town,village));
         AttractInvestment.put("ongoingProject", this.attractInvestmentStatistics("2",town,village));

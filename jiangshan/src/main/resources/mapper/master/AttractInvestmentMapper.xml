@@ -69,7 +69,8 @@
         from  t_investment_history b
         left join t_future_product a on a.id = b.product_id
         left join t_product as c on a.id = c.obj_id
-        <where>(a.plant = '2' or a.plant = '3')
+        <where>
+            (a.plant = '2' or a.plant = '3')
             and DATE_FORMAT(b.invest_time, '%Y') = DATE_FORMAT(now(), '%Y')
             and type_in_future = '2'
             <if test=" town != '' and town!= null ">
@@ -78,9 +79,9 @@
             <if test=" village != '' and village!= null">
                 and c.village = #{village}
             </if>
-            GROUP BY type_in_future
         </where>
 
+        GROUP BY type_in_future
 
     </select>
 </mapper>

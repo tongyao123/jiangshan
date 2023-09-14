@@ -1,4 +1,6 @@
 spring:
+  main:
+    allow-circular-references: true  #允许循环引用
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     master:  # 3.0 Datasource
@@ -31,3 +33,7 @@ spring:
 mybatis:
   mapper-locations: classpath:mapper/master/*.xml  #对应mapper映射xml文件所在路径
   type-aliases-package: com.example.jiangshan.entity  #对应实体类路径
+
+OPEN_URL: https://api2.hik-cloud.com
+CLIENT_ID: 0fc2fa594ba143a8939f59fe088c54eb
+CLIENT_SECRET: 4ebee99d9a2d42218dfa4c4e75cf3f3e

@@ -32,5 +32,5 @@ public interface ScreenMapper {
     * @Author: Xiao Lee
     * @Date: 2023-09-06
     */
-    List<HashMap<String, Object>> selectScreenCoordinate();
+    List<HashMap<String, Object>> selectScreenCoordinate(@Param("town") String town, @Param("village") String village);
 }

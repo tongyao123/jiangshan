@@ -35,19 +35,19 @@ public class ScreenMessageController {
 
     @ResponseBody
     @RequestMapping(value = "/getAgricultureStatistics")
-    public HashMap getAgricultureStatistics(@RequestParam(required=false,value="town") String town, @RequestParam(required=false,value="village") String village){
+    public HashMap<String, Object> getAgricultureStatistics(@RequestParam(required = false, value = "town") String town, @RequestParam(required = false, value = "village") String village) {
         return agricultureService.agricultureStatistics(town, village);
     }
 
     @ResponseBody
     @RequestMapping(value = "/getCulturalTourismStatistics")
-    public CulturalTourismStatistics getCulturalTourismStatistics(@RequestParam(required=false,value="town") String town, @RequestParam(required=false,value="village") String village){
+    public CulturalTourismStatistics getCulturalTourismStatistics(@RequestParam(required = false, value = "town") String town, @RequestParam(required = false, value = "village") String village) {
         return culturalTourismService.culturalTourismStatistics(town, village);
     }
 
     @ResponseBody
     @RequestMapping(value = "/getAttractInvestmentStatistics")
-    public HashMap getAttractInvestmentStatistics(@RequestParam(required=false,value="town") String town, @RequestParam(required=false,value="village") String village) {
+    public HashMap<String,Object>  getAttractInvestmentStatistics(@RequestParam(required = false, value = "town") String town, @RequestParam(required = false, value = "village") String village) {
         return attractInvestmentService.attractInvestmentStatistics(town, village);
     }
 
@@ -65,40 +65,40 @@ public class ScreenMessageController {
 
     @ResponseBody
     @RequestMapping(value = "/getPlanningProductStatistics")
-    public HashMap getPlanningProductStatistics(@RequestParam(required = false,value = "town") String town, @RequestParam(required = false,value ="village") String village) {
+    public HashMap getPlanningProductStatistics(@RequestParam(required = false, value = "town") String town, @RequestParam(required = false, value = "village") String village) {
         return planningProductService.planningProductStatistics(town, village);
     }
 
     @ResponseBody
     @RequestMapping(value = "/getAgricultureCoordinate")
-    public List getAgricultureDetailList(@RequestParam(required = false,value = "town") String town, @RequestParam(required = false,value ="village") String village) throws Exception {
+    public List getAgricultureDetailList(@RequestParam(required = false, value = "town") String town, @RequestParam(required = false, value = "village") String village) throws Exception {
         System.out.println("begin--------------------------------------------------------------");
-        System.out.println(town+"---------------------------------"+village);
+        System.out.println(town + "---------------------------------" + village);
         System.out.println("end----------------------------------------------------------------");
         return agricultureService.agricultureDetailList(town, village);
     }
 
     @ResponseBody
     @RequestMapping(value = "/getCulturalCoordinate")
-    public List getCulturalDetailList(@RequestParam(required=false,value="town") String town, @RequestParam(required=false,value="village") String village) {
+    public List getCulturalDetailList(@RequestParam(required = false, value = "town") String town, @RequestParam(required = false, value = "village") String village) {
         return culturalTourismService.culturalDetailList(town, village);
     }
 
     @ResponseBody
     @RequestMapping(value = "/getTourismCoordinate")
-    public List getTourismDetailList(@RequestParam(required=false,value="town") String town, @RequestParam(required=false,value="village") String village) {
+    public List getTourismDetailList(@RequestParam(required = false, value = "town") String town, @RequestParam(required = false, value = "village") String village) {
         return culturalTourismService.tourismDetailList(town, village);
     }
 
     @ResponseBody
     @RequestMapping(value = "/getAttractInvestmentCoordinate")
-    public List getAttractInvestmentCoordinate(@RequestParam(required=false,value="town") String town, @RequestParam(required=false,value="village") String village) {
+    public List getAttractInvestmentCoordinate(@RequestParam(required = false, value = "town") String town, @RequestParam(required = false, value = "village") String village) {
         return attractInvestmentService.attractInvestmentDetailList(town, village);
     }
 
     @ResponseBody
     @RequestMapping(value = "/getVillageAttractInvestmentCoordinate")
-    public List getAttractInvestmentCoordinate(@RequestBody Map village){
+    public List getAttractInvestmentCoordinate(@RequestBody Map village) {
         String villageCode = village.get("village").toString();
         return attractInvestmentService.villageAttractInvestmentCoordinate(villageCode);
     }
@@ -136,15 +136,15 @@ public class ScreenMessageController {
 
     @ResponseBody
     @PostMapping(value = "/getScreenContent")
-    public HashMap getScreenContent(@RequestBody Map contentType) throws Exception {
+    public HashMap getScreenContent(@RequestBody Map contentType) {
         String type = contentType.get("contentType").toString();
         return screenService.screenContent(type);
     }
 
     @ResponseBody
     @RequestMapping(value = "/getScreenCoordinate")
-    public List getScreenCoordinate() throws Exception {
-        return screenService.selectScreenCoordinate();
+    public List getScreenCoordinate(@Param("town") String town, @Param("village") String village){
+        return screenService.selectScreenCoordinate(town,village);
     }
 
 
