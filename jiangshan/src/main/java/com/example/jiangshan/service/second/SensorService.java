@@ -34,7 +34,6 @@ public class SensorService {
         SOIL_CURVE_TYPE.put("VT", "电压");
 
     }
-
     @Autowired
     private SensorMapper sensorMapper;
 

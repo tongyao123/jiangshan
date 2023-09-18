@@ -1,3 +1,4 @@
+/*
 package com.example.jiangshan.exception;
 
 import org.springframework.http.HttpStatus;
@@ -11,3 +12,4 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
 
 }
+*/
