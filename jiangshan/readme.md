@@ -29,3 +29,6 @@
       * soil 土壤检测器
   * 传入参数 sensorId ，值限制为传感器id，建议通过getSensorIDList接口获得列表后选择传入
   * 传入参数 curveType ，值限制传感器的可查询曲线类型，建议通过getCurveType接口获得列表后选择传入
+
+* 0.40版本
+* 增加海康摄像头相关的后台访问接口
