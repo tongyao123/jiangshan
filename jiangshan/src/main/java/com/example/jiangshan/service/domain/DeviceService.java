@@ -29,10 +29,11 @@ import com.example.jiangshan.util.UuidUtil;
  **/
 @Service
 public class DeviceService {
-
+    @Autowired
     private OpenBasicClient openBasicClient;
-
+    @Autowired
     private DeviceMapper deviceMapper;
+    @Autowired
     private GroupMapper groupMapper;
 
     public void addDevice(DeviceAddParam deviceAddParam) {

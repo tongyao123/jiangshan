@@ -34,15 +34,15 @@ import com.example.jiangshan.util.UuidUtil;
 @Service
 public class PermissionGroupService {
 
-
+@Autowired
     private OpenAccessClient openAccessClient;
 
-
+    @Autowired
     private AccessPermissionGroupMapper permissionGroupMapper;
-
+    @Autowired
 
     private DevicePermissionGroupRelMapper devicePermissionGroupMapper;
-
+    @Autowired
 
     private PersonPermissionGroupRelMapper personPermissionGroupMapper;
 

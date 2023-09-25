@@ -134,7 +134,7 @@ public class JiangshanApplicationTests {
         String url = "https://api2.hik-cloud.com/v1/auth/open/getVideoToken";
 
         // 设置POST请求的报文内容
-        String requestBody = ""; //"client_id=" + client_id + "&client_secret=" + client_secret + "&grant_type=" + grant_type + "&scope=" + scope;
+        String requestBody = "client_id=" + client_id + "&client_secret=" + client_secret + "&grant_type=" + grant_type + "&scope=" + scope;
 
         // 创建URL对象
         URL apiUrl = new URL(url);

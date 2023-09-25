@@ -29,10 +29,12 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ChannelService {
 
-
+    @Autowired
     private OpenBasicClient openBasicClient;
+    @Autowired
 
     private DeviceChannelMapper channelMapper;
+
 
     public List<ChannelVO> listChannels(String deviceSerial) {
 
@@ -75,7 +77,7 @@ public class ChannelService {
     private List<ChannelVO> toChannelVOs(List<DeviceChannel> deviceChannels) {
 
         return deviceChannels.stream().map(deviceChannel -> ChannelVO.aBuilder.aChannelVO().setChannelId(deviceChannel
-                .getChannelId()).setChannelName(deviceChannel.getChannelName())
+                        .getChannelId()).setChannelName(deviceChannel.getChannelName())
                 .setChannelNo(deviceChannel.getChannelNo()).setChannelStatus(deviceChannel.getChannelStatus())
                 .setDeviceSerial(deviceChannel.getDeviceSerial())
                 .setChannelType(ChannelTypeEnum.getChannelTypeById(deviceChannel.getChannelType()))

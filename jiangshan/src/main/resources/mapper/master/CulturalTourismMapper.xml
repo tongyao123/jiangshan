@@ -3,7 +3,7 @@
 <mapper namespace="com.example.jiangshan.mapper.master.CulturalTourismMapper">
     <select id="tourismDetailList" parameterType="java.lang.String" resultType="java.util.HashMap">
         select id,
-        case type when 5 then '康养基地' when 6 then '酒店/民宿' when 7 then '餐饮' when 9 then '旅游景点' end as type,
+        case type  when 5 then '康养基地' when 6 then '酒店/民宿' when 7 then '餐饮' when 9 then '旅游景点' end as type,
         area,
         name,
         address,
