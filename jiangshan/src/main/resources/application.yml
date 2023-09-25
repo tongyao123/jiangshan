@@ -1,30 +1,30 @@
 master:
   dateSource:
-    url: jdbc:mysql://27.151.6.66:3306/jkapp_1630042506706026497?serverTimezone=GMT%2B8&useSSL=false&characterEncoding=UTF-8
-    username: root
-    password: ZSCN888.
+    url: jdbc:mysql://127.0.0.1:3306/jkapp_1630042506706026497?serverTimezone=GMT%2B8&useSSL=false&characterEncoding=UTF-8
+    username: 
+    password: 
     driver-class-name: com.mysql.cj.jdbc.Driver
 second:
   dateSource:
-    url: jdbc:mysql://121.204.146.133:3306/sxrtu?serverTimezone=GMT%2B8&useSSL=false&characterEncoding=UTF-8
-    username: root
-    password: Xmsx123!@#
+    url: jdbc:mysql://127.0.0.1:3306/sxrtu?serverTimezone=GMT%2B8&useSSL=false&characterEncoding=UTF-8
+    username: 
+    password:
     driver-class-name: com.mysql.cj.jdbc.Driver
 third:
   dateSource:
-    jdbcUrl: jdbc:mysql://10.19.161.5:3306/demo?serverTimezone=GMT%2B8&useSSL=false&characterEncoding=UTF-8
-    username: root
-    password: Hik12345+
+    jdbcUrl: jdbc:mysql://127.0.0.1:3306/demo?serverTimezone=GMT%2B8&useSSL=false&characterEncoding=UTF-8
+    username:
+    password: 
     driver-class-name: com.mysql.cj.jdbc.Driver
 weChat:
-  merchantId: 1636296954
+  merchantId: 
   privateKeyPath: E:\\??\\privateKey\\apiclient_key.pem
-  merchantSerialNumber: 2DBF0F8C1DDFF43780020628E81049536094D197
-  apiV3key: sd15as1d56as1d56a156d156ad156as1
-  supplyAppId: wxed05c9e3b45e9aa8
-  supplySecret: 84f030f9ec70f2ee48f0176b7ade3f45
-  jiangshanAppId: wx7e87828783de8ffc
-  jiangshanSecret: ae9441b5ae49cc5be028bff858e90db8
+  merchantSerialNumber:
+  apiV3key:
+  supplyAppId: 
+  supplySecret:
+  jiangshanAppId:
+  jiangshanSecret: 
 
 info:
   app:
@@ -49,10 +49,10 @@ spring:
       charset: UTF-8
       force: true
   datasource:
-    username: root
-    password: ZSCN888.
+    username:
+    password:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://27.151.6.66:3306/hikang_camera
+    url: jdbc:mysql://127.0.0.1:3306/hikang_camera
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
       initialSize: 5
@@ -72,8 +72,8 @@ logging:
     com.open.demov2.domain: debug
 
 OPEN_URL: https://api2.hik-cloud.com
-CLIENT_ID: 0fc2fa594ba143a8939f59fe088c54eb
-CLIENT_SECRET: 4ebee99d9a2d42218dfa4c4e75cf3f3e
+CLIENT_ID: 
+CLIENT_SECRET: 
 server:
   servlet:
     encoding:
