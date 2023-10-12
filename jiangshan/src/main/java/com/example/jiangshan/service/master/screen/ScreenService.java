@@ -20,7 +20,7 @@ import static com.example.jiangshan.function.NumericalConversion.LongToInteger;
  * @Date: 2023-09-06
  */
 @Service
-public class ScreenService {
+public class ScreenService implements ScreenMapper {
     private final ScreenMapper screenMapper;
     private static final String[] CONTEXT_TYPE_LIST = {"first", "second", "third", "fourth", "fifth", "sixth"};
     private static final List<String> COLOR_LIST = Arrays.asList(
@@ -40,13 +40,15 @@ public class ScreenService {
      * @Return: java.util.HashMap<java.lang.String, java.lang.Object>
      * @Description: 根据大屏的页面类型获取对应大屏文本主体内容
      */
-    public HashMap<String, Object> screenContent(String contentType) {
+    @Override
+    public HashMap<String, Object> selectScreenContent(String contentType) {
         if (!Arrays.asList(CONTEXT_TYPE_LIST).contains(contentType)) {
             throw new RuntimeException("Error contentType input! Please check what you entered!");
         }
         contentType = contentType + "_content";
         return screenMapper.selectScreenContent(contentType);
     }
+
 
     /**
      * @Date: 2023-09-06
@@ -55,12 +57,43 @@ public class ScreenService {
      * @Return: java.util.List<java.util.HashMap < java.lang.String, java.lang.Object>>
      * @Description: 根据选择的村镇等级展示对应的大屏所包含的所有点位
      */
+    @Override
     public List<HashMap<String, Object>> selectScreenCoordinate(@Param("town") String town, @Param("village") String village) {
-        List<HashMap<String, Object>> screenCoordinate = screenMapper.selectScreenCoordinate(town,village);
+        List<HashMap<String, Object>> screenCoordinate = screenMapper.selectScreenCoordinate(town, village);
         for (HashMap<String, Object> screenCoordinateItem : screenCoordinate) {
             int index = LongToInteger(screenCoordinateItem.get("type"));
             screenCoordinateItem.put("color", COLOR_LIST.get(index));
         }
         return screenCoordinate;
+    }
+
+    /**
+     * @Date: 2023/10/11
+     * @Author: Xiao Lee
+     * @Param: [distinct]
+     * @Return: java.util.List<java.util.HashMap < java.lang.String, ?>>
+     * @Description: 根据传入的区编码，返回对应区、县下所属的城镇
+     */
+    @Override
+    public List<HashMap<String, ?>> selectTownList(@Param("distinct") String distinct) {
+        if (distinct == null || distinct.length() == 0) {
+            throw new RuntimeException("Empty distinct input! Please check what you entered!");
+        }
+        return screenMapper.selectTownList(distinct);
+    }
+
+    /**
+     * @Date: 2023/10/11
+     * @Author: Xiao Lee
+     * @Param: [town]
+     * @Return: java.util.List<java.util.HashMap < java.lang.String, ?>>
+     * @Description: 根据传入的城镇编码，返回对应城镇下所属的村
+     */
+    @Override
+    public List<HashMap<String, ?>> selectVillageList(@Param("town") String town) {
+        if (town == null || town.length() == 0) {
+            throw new RuntimeException("Empty town input! Please check what you entered!");
+        }
+        return screenMapper.selectVillageList(town);
     }
 }

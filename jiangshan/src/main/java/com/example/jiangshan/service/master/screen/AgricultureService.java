@@ -50,8 +50,8 @@ public class AgricultureService implements AgricultureMapper {
 
     }
 
-    public List<HashMap> agricultureDetailList(@Param("town")String town, @Param("village") String village)  throws Exception {
-        return agricultureMapper.agricultureDetailList(town,village);
+    public List<HashMap> selectAgricultureDetailList(@Param("town")String town, @Param("village") String village)  throws Exception {
+        return agricultureMapper.selectAgricultureDetailList(town,village);
     }
 
 

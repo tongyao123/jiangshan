@@ -11,7 +11,7 @@ public class JiangshanApplication {
 
 	public static void main(String[] args) {
 		ConfigurableApplicationContext context = SpringApplication.run(JiangshanApplication.class, args);
-		context.publishEvent(new ServiceReadyEvent(context));
+		//context.publishEvent(new ServiceReadyEvent(context));
 	}
 
 }

@@ -1,21 +1,41 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.example.jiangshan.mapper.master.ScreenMapper">
+    <!-- 首页文本查询语句-->
     <select id="selectScreenContent" parameterType="java.lang.String" resultType="java.util.HashMap">
         select ${contentType}
         from t_big_screen
         where id = 1
     </select>
+    <!--    所有规范资产数据坐标点位查询语句-->
     <select id="selectScreenCoordinate" resultType="java.util.HashMap">
         SELECT *, b.color as color, b.icon as icon
         FROM t_product a
-                 left join t_product_color b on a.type = b.produId
-        <where> a.TYPE != ''
+        left join t_product_color b on a.type = b.produId
+        <where>a.TYPE != ''
             <if test=" town != '' and town!= null ">
                 and a.town = #{town}
             </if>
             <if test=" village != '' and village!= null">
                 and a.village = #{village}
+            </if>
+        </where>
+    </select>
+    <!-- 所有城镇的查询语句 -->
+    <select id="selectTownList" parameterType="java.lang.String" resultType="java.util.HashMap">
+        select tom_id as town_id , tom_town as town_name from t_town
+        <where>
+            <if test=" distinct != '' and distinct!= null ">
+                tom_distinct=#{distinct}
+            </if>
+        </where>
+    </select>
+    <!-- 所有乡村的查询语句-->
+    <select id="selectVillageList" parameterType="java.lang.String" resultType="java.util.HashMap">
+        select id as village_id,town_code,com_village as village_name from t_village
+        <where>
+            <if test=" town != '' and town!= null ">
+                town_code = #{town}
             </if>
         </where>
     </select>

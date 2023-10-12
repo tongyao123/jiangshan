@@ -12,15 +12,15 @@ import java.util.List;
 @Mapper
 public interface AttractInvestmentMapper {
 
-    List<HashMap> attractInvestmentStatistics(@Param("typeInFuture") String typeInFuture,@Param("town") String town, @Param("village") String village);
+    List<HashMap> selectAttractInvestmentStatistics(@Param("typeInFuture") String typeInFuture,@Param("town") String town, @Param("village") String village);
 
-    List<HashMap> attractInvestmentList(@Param("town") String town, @Param("village") String village);
+    List<HashMap> selectAttractInvestmentList(@Param("town") String town, @Param("village") String village);
 
-    List<HashMap> attractInvestmentDetailList(@Param("town") String town, @Param("village") String village);
+    List<HashMap> selectAttractInvestmentDetailList(@Param("town") String town, @Param("village") String village);
 
     List<HashMap> villageAttractInvestmentCoordinate(@Param("village") String village);
 
-    List<HashMap> villageList();
+    List<HashMap> selectVillageList();
 
 
 }

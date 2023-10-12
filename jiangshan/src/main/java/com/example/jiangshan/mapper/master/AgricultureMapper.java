@@ -15,6 +15,6 @@ public interface AgricultureMapper {
 
     HashMap<String,Object> tea(@Param("town") String town, @Param("village") String village);
 
-    List<HashMap> agricultureDetailList(@Param("town") String town, @Param("village") String village) throws Exception;
+    List<HashMap> selectAgricultureDetailList(@Param("town") String town, @Param("village") String village) throws Exception;
 
 }

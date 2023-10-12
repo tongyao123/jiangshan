@@ -75,7 +75,7 @@ CREATE TABLE `person_permission_group_rel` (
 
 drop TABLE if exists message;
 CREATE TABLE `message` (
-  `msg_id` char(32) NULL,
+  `msg_id` char(32) NOT NULL,
   `msg_type` varchar(100) NULL,
   `content` TINYTEXT NULL,
   PRIMARY KEY (`msg_id`)

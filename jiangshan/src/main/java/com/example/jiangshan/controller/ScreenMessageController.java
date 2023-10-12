@@ -47,7 +47,7 @@ public class ScreenMessageController {
 
     @ResponseBody
     @RequestMapping(value = "/getAttractInvestmentStatistics")
-    public HashMap<String,Object>  getAttractInvestmentStatistics(@RequestParam(required = false, value = "town") String town, @RequestParam(required = false, value = "village") String village) {
+    public HashMap<String, Object> getAttractInvestmentStatistics(@RequestParam(required = false, value = "town") String town, @RequestParam(required = false, value = "village") String village) {
         return attractInvestmentService.attractInvestmentStatistics(town, village);
     }
 
@@ -75,7 +75,7 @@ public class ScreenMessageController {
         System.out.println("begin--------------------------------------------------------------");
         System.out.println(town + "---------------------------------" + village);
         System.out.println("end----------------------------------------------------------------");
-        return agricultureService.agricultureDetailList(town, village);
+        return agricultureService.selectAgricultureDetailList(town, village);
     }
 
     @ResponseBody
@@ -93,7 +93,7 @@ public class ScreenMessageController {
     @ResponseBody
     @RequestMapping(value = "/getAttractInvestmentCoordinate")
     public List getAttractInvestmentCoordinate(@RequestParam(required = false, value = "town") String town, @RequestParam(required = false, value = "village") String village) {
-        return attractInvestmentService.attractInvestmentDetailList(town, village);
+        return attractInvestmentService.selectAttractInvestmentDetailList(town, village);
     }
 
     @ResponseBody
@@ -106,7 +106,7 @@ public class ScreenMessageController {
     @ResponseBody
     @RequestMapping(value = "/getVillageStatistics")
     public List getVillageList() {
-        return attractInvestmentService.villageList();
+        return attractInvestmentService.selectVillageList();
     }
 
 
@@ -138,15 +138,40 @@ public class ScreenMessageController {
     @PostMapping(value = "/getScreenContent")
     public HashMap getScreenContent(@RequestBody Map contentType) {
         String type = contentType.get("contentType").toString();
-        return screenService.screenContent(type);
+        return screenService.selectScreenContent(type);
     }
 
     @ResponseBody
     @RequestMapping(value = "/getScreenCoordinate")
-    public List getScreenCoordinate(@Param("town") String town, @Param("village") String village){
-        return screenService.selectScreenCoordinate(town,village);
+    public List getScreenCoordinate(@Param("town") String town, @Param("village") String village) {
+        return screenService.selectScreenCoordinate(town, village);
     }
 
+    /**
+     * @Date: 2023/10/12
+     * @Author: Xiao Lee
+     * @Param: [distinct]
+     * @Return: java.util.List<java.util.HashMap < java.lang.String, ?>>
+     * @Description: 根据传入的区编码，返回对应区、县下所属的城镇
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getTownList")
+    public List<HashMap<String, ?>> selectTownList(@Param("distinct") String distinct) {
+        return screenService.selectTownList(distinct);
+    }
+
+    /**
+     * @Date: 2023/10/12
+     * @Author: Xiao Lee
+     * @Param: [town]
+     * @Return: java.util.List<java.util.HashMap < java.lang.String, ?>>
+     * @Description: 根据传入的城镇编码，返回对应城镇下所属的村
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getVillageList")
+    public List<HashMap<String, ?>> selectVillageList(@Param("town") String town) {
+        return screenService.selectVillageList(town);
+    }
 
     @ResponseBody
     @RequestMapping("/struggle")
