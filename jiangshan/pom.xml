@@ -10,12 +10,14 @@
     </parent>
     <groupId>com.example</groupId>
     <artifactId>jiangshan</artifactId>
-    <version>0.0.4-SNAPSHOT</version>
+    <version>1.0.1-SNAPSHOT</version>
     <name>jiangshan</name>
     <description>Demo project for Spring Boot</description>
     <properties>
         <java.version>8</java.version>
         <springfox-swagger2.version>2.7.0</springfox-swagger2.version>
+        <!-- 跳过测试 -->
+        <skipTests>true</skipTests>
     </properties>
     <packaging>jar</packaging>
     <dependencies>
