@@ -53,14 +53,14 @@ public class ScreenMessageController {
 
     @ResponseBody
     @RequestMapping(value = "/getPartyStatistics")
-    public List getPartyStatistics() {
-        return partyService.partyStatistics();
+    public List getPartyStatistics(@Param("town") String town,@Param("village") String village) {
+        return partyService.partyStatistics(town, village);
     }
 
     @ResponseBody
     @RequestMapping(value = "/getTalentsStatistics")
-    public HashMap getTalentsStatistics() {
-        return talentsService.talentsStatistics();
+    public HashMap getTalentsStatistics(@Param("town") String town,@Param("village") String village) {
+        return talentsService.talentsStatistics(town, village);
     }
 
     @ResponseBody
@@ -112,26 +112,26 @@ public class ScreenMessageController {
 
     @ResponseBody
     @RequestMapping(value = "/getPartyCoordinate")
-    public List getPartyCoordinate() {
-        return partyService.partyCoordinate();
+    public List getPartyCoordinate(@Param("town") String town, @Param("village") String village) {
+        return partyService.partyCoordinate(town, village);
     }
 
     @ResponseBody
     @RequestMapping(value = "/getPolict")
-    public List getPolict() {
-        return partyService.polictList();
+    public List getPolict(@Param("town") String town) {
+        return partyService.polictList(town);
     }
 
     @ResponseBody
     @RequestMapping(value = "/getTalentsCoordinate")
-    public List getTalentsCoordinate() {
-        return talentsService.talentsCoordinate();
+    public List getTalentsCoordinate(@Param("town") String town,@Param("village") String village) {
+        return talentsService.talentsCoordinate(town, village);
     }
 
     @ResponseBody
     @RequestMapping(value = "/getTalentPolicyList")
-    public List getTalentPolicyList() {
-        return talentsService.talentPolicyList();
+    public List getTalentPolicyList(@Param("town") String town) {
+        return talentsService.talentPolicyList(town);
     }
 
     @ResponseBody

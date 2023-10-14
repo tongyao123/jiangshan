@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.jiangshan.mapper.master.TalentsMapper">
+    <!--    人才总数统计-->
+    <select id="getTalentsStatistics" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select count(1) as amount from t_talents a left join t_people b on a.id=b.obj_id
+        <where>
+            <if test=" town != '' and town!= null ">
+                and b.town = #{town}
+            </if>
+            <if test=" village != '' and village!= null">
+                and b.village = #{village}
+            </if>
+        </where>
+    </select>
+    <!--    就业人才数据统计-->
+    <select id="getEmploymentTalentsStatistics" resultType="java.lang.Integer">
+        select count(1) as amount from t_talents a left join t_people b on a.id=b.obj_id
+        <where>now_work_address!=''
+            <if test=" town != '' and town!= null ">
+                and b.town = #{town}
+            </if>
+            <if test=" village != '' and village!= null">
+                and b.village = #{village}
+            </if>
+        </where>
+    </select>
+    <!-- 人才学历统计 -->
+    <select id="getTalentsEducationStatistics" parameterType="java.lang.String" resultType="java.util.HashMap">
+        SELECT CASE most_education WHEN '1' THEN '高中' WHEN '2' THEN '大专' WHEN '3' THEN '本科' WHEN '4' THEN '研究生' WHEN '5'
+        THEN '博士' ELSE '其他' END as most_education_,count(1) AS amount FROM t_talents LEFT JOIN t_people on
+        t_talents.id=t_people.obj_id
+        <where>
+            <if test=" town != '' and town!= null ">
+                t_people.town = #{town}
+            </if>
+            <if test=" village != '' and village!= null">
+                and t_people.village = #{village}
+            </if>
+        </where>
+        GROUP BY most_education
+    </select>
+    <!-- 人员点位信息-->
+    <select id="talentsCoordinate" parameterType="java.lang.String" resultType="java.util.HashMap">
+        SELECT
+        b.name,b.now_add,b.longitude,b.latitude,b.sex,a.is_party,b.native_place,b.most_school,a.now_work_address,b.img
+        FROM t_talents a LEFT JOIN t_people b ON a.id=b.obj_id
+        <where>b.longitude is not null and b.latitude is not null and b.now_add!=''
+            <if test=" town != '' and town!= null ">
+                and b.town = #{town}
+            </if>
+            <if test=" village != '' and village!= null">
+                and b.village = #{village}
+            </if>
+        </where>
+    </select>
+    <select id="talentPolicyList" parameterType="java.lang.String" resultType="java.util.HashMap">
+        select * from t_policy
+        <where>type=1
+            <if test=" town != '' and town!= null ">
+                and tom_id = #{town}
+            </if>
+        </where>
+    </select>
+</mapper>

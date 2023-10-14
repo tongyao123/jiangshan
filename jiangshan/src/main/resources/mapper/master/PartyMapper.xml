@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.jiangshan.mapper.master.PartyMapper">
+    <!--    党员总数-->
+    <select id="getPartyMembersNumber" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT count(1) FROM t_part_people a LEFT JOIN t_people b ON a.id=b.obj_id
+        <where>
+            <if test=" town != '' and town!= null ">
+                and b.town = #{town}
+            </if>
+            <if test=" village != '' and village!= null">
+                and b.village = #{village}
+            </if>
+        </where>
+    </select>
+    <!--    预备党员数据统计-->
+    <select id="getDevelopingPartyMembersNumber" resultType="java.lang.Integer">
+        SELECT count(1) FROM t_part_people a LEFT JOIN t_people b ON a.id=b.obj_id
+        <where>a.party_post='预备党员'
+            <if test=" town != '' and town!= null ">
+                and b.town = #{town}
+            </if>
+            <if test=" village != '' and village!= null">
+                and b.village = #{village}
+            </if>
+        </where>
+    </select>
+    <!-- 不同类型荣誉数量统计 -->
+    <select id="getTypeOfGloryNumber" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT count(1) FROM t_glory
+        <where>type=#{type}
+            <if test=" town != '' and town!= null ">
+                and town = #{town}
+            </if>
+            <if test=" village != '' and village!= null">
+                and village = #{village}
+            </if>
+        </where>
+    </select>
+    <!-- 党员点位数据-->
+    <select id="partyCoordinate" parameterType="java.lang.String" resultType="java.util.HashMap">
+        SELECT
+        b.name,b.longitude,b.latitude,b.now_add,a.in_department,b.sex,DATE_FORMAT(a.party_membership_time,'%Y年%m月%d日')
+        as party_membership_time,b.date_of_birth,b.native_place,b.most_education,b.img FROM t_part_people a LEFT JOIN
+        t_people b ON a.id=b.obj_id
+        <where>b.longitude is not null and b.latitude is not null and b.now_add!=''
+            <if test=" town != '' and town!= null ">
+                and b.town = #{town}
+            </if>
+            <if test=" village != '' and village!= null">
+                and b.village = #{village}
+            </if>
+        </where>
+    </select>
+    <select id="polictList" parameterType="java.lang.String" resultType="java.util.HashMap">
+        select * from t_policy
+        <where>type=1
+            <if test=" town != '' and town!= null ">
+                and tom_id = #{town}
+            </if>
+        </where>
+    </select>
+</mapper>

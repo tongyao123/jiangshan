@@ -1,6 +1,7 @@
 package com.example.jiangshan.service.master.screen;
 
 import com.example.jiangshan.mapper.master.PartyMapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,47 +17,47 @@ public class PartyService {
         this.partyMapper = partyMapper;
     }
 
-    public Integer getPartyMembersNumber() {
-        return partyMapper.getPartyMembersNumber();
+    public Integer getPartyMembersNumber(@Param("town") String town, @Param("village") String village) {
+        return partyMapper.getPartyMembersNumber(town, village);
     }
 
-    public Integer getDevelopingPartyMembersNumber() {
-        return partyMapper.getDevelopingPartyMembersNumber();
+    public Integer getDevelopingPartyMembersNumber(@Param("town") String town,@Param("village") String village) {
+        return partyMapper.getDevelopingPartyMembersNumber(town, village);
     }
 
-    public Integer getTypeOfGloryNumber(String type) {
-        return partyMapper.getTypeOfGloryNumber(type);
+    public Integer getTypeOfGloryNumber(String type,@Param("town") String town,@Param("village") String village) {
+        return partyMapper.getTypeOfGloryNumber(type,town,village);
     }
 
-    public List partyStatistics() {
+    public List partyStatistics(@Param("town") String town,@Param("village") String village) {
         List PartyStatistics = new ArrayList();
 
         PartyStatistics.add(new HashMap<String, Object>() {{
             put("name", "党员总数");
-            put("number", partyMapper.getPartyMembersNumber());
+            put("number", partyMapper.getPartyMembersNumber(town, village));
         }});
         PartyStatistics.add(new HashMap<String, Object>() {{
             put("name", "发展党员总数");
-            put("number", partyMapper.getDevelopingPartyMembersNumber());
+            put("number", partyMapper.getDevelopingPartyMembersNumber(town, village));
         }});
         PartyStatistics.add(new HashMap<String, Object>() {{
             put("name", "党员荣誉");
-            put("number", partyMapper.getTypeOfGloryNumber("3"));
+            put("number", partyMapper.getTypeOfGloryNumber("3",town,village));
         }});
         PartyStatistics.add(new HashMap<String, Object>() {{
             put("name", "集体荣誉");
-            put("number", partyMapper.getTypeOfGloryNumber("2"));
+            put("number", partyMapper.getTypeOfGloryNumber("2",town,village));
         }});
         return PartyStatistics;
     }
 
-    public List partyCoordinate() {
-        return partyMapper.partyCoordinate();
+    public List partyCoordinate(@Param("town") String town, @Param("village") String village) {
+        return partyMapper.partyCoordinate(town, village);
     }
 
-    public  List  polictList(){
+    public  List  polictList(@Param("town") String town){
 
-        return partyMapper.polictList();
+        return partyMapper.polictList(town);
     }
 
 }
