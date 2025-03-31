@@ -9,10 +9,14 @@
     </select>
     <!--    所有规范资产数据坐标点位查询语句-->
     <select id="selectScreenCoordinate" resultType="java.util.HashMap">
-        SELECT *, b.color as color, b.icon as icon
+        SELECT a.*,b.produName, b.color as color, b.icon as icon,d.people_id as help_people_id,ifnull(bp.name,"暂无") as help_people,ifnull(bp.tel,"暂无") as help_tel,c.shop_video as shop_video
         FROM t_product a
         left join t_product_color b on a.type = b.produId
-        <where>a.TYPE != ''
+        left join base_shop  c on a.id = c.product_id
+        left join t_help  d on d.shop_id = c.id
+        left join t_part_people bpp on bpp.id=d.people_id
+        left join t_people bp on bp.obj_id=bpp.id
+        <where> a.TYPE != '' and a.delete_status='01' and addArr != '' and addArr IS not NULL
             <if test=" town != '' and town!= null ">
                 and a.town = #{town}
             </if>
@@ -23,7 +27,7 @@
     </select>
     <!-- 所有城镇的查询语句 -->
     <select id="selectTownList" parameterType="java.lang.String" resultType="java.util.HashMap">
-        select tom_id as town_id , tom_town as town_name from t_town
+        select tom_code as town_id , tom_town as town_name from t_town
         <where>
             <if test=" distinct != '' and distinct!= null ">
                 tom_distinct=#{distinct}
@@ -32,10 +36,29 @@
     </select>
     <!-- 所有乡村的查询语句-->
     <select id="selectVillageList" parameterType="java.lang.String" resultType="java.util.HashMap">
-        select id as village_id,town_code,com_village as village_name from t_village
+        select com_code as village_id,town_code,com_village as village_name,village_product from t_village
         <where>
             <if test=" town != '' and town!= null ">
                 town_code = #{town}
+            </if>
+        </where>
+    </select>
+    <!--    查询每个乡村的一村一品-->
+    <select id="selectVillageProduct" parameterType="java.lang.String"  resultType="java.lang.String">
+        select village_product from t_village
+        <where>
+            <if test="village != '' and village != null ">
+                com_code = #{village}
+            </if>
+        </where>
+    </select>
+    <!--    查询每个城镇的特色产品-->
+    <select id="selectTownProduct" parameterType="java.lang.String" resultType="java.lang.String">
+        select
+        if(produce is null, '特产品', produce) as produce from t_town
+        <where>
+            <if test="town != '' and town != null ">
+                tom_code = #{town}
             </if>
         </where>
     </select>

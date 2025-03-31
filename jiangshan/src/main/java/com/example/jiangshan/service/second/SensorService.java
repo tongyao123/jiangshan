@@ -6,7 +6,6 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -19,7 +18,7 @@ public class SensorService {
 
     static {
         WEATHER_CURVE_TYPE.put("DRP", "5分钟时段雨量");
-        WEATHER_CURVE_TYPE.put("US", "'风速'");
+        WEATHER_CURVE_TYPE.put("US", "风速");
         WEATHER_CURVE_TYPE.put("AI", "气温");
         WEATHER_CURVE_TYPE.put("MST", "空气湿度");
         WEATHER_CURVE_TYPE.put("FL", "气压");
@@ -34,6 +33,7 @@ public class SensorService {
         SOIL_CURVE_TYPE.put("VT", "电压");
 
     }
+
     @Autowired
     private SensorMapper sensorMapper;
 
@@ -48,7 +48,7 @@ public class SensorService {
     }
 
 
-    public List<String> getSensorIdList(String sensorType) throws Exception {
+    public List<String> selectSensorIdList(String sensorType) throws Exception {
 
         if (sensorType.equals("weather")) {
             sensorType = "`st_pptn_r`";
@@ -71,14 +71,14 @@ public class SensorService {
         }
     }
 
-    public List<HashMap> getSensorCurve(@Param("sensorType") String sensorType, @Param("sensorId") String sensorId, @Param("curveType") String curveType) {
+    public List<HashMap> selectSensorCurve(@Param("sensorType") String sensorType, @Param("sensorId") String sensorId, @Param("curveType") String curveType) {
 
         String curveName = new String();
         if (
                 (sensorType.equals("weather") && WEATHER_CURVE_TYPE.containsKey(curveType)) ||
                         (sensorType.equals("soil") && SOIL_CURVE_TYPE.containsKey(curveType))
         ) {
-            return  sensorMapper.selectSensorCurve(sensorType.equals("weather") ? "`st_pptn_r`" : "`st_soil_r`",
+            return sensorMapper.selectSensorCurve(sensorType.equals("weather") ? "`st_pptn_r`" : "`st_soil_r`",
                     sensorId,
                     curveType,
                     sensorType.equals("weather") ? WEATHER_CURVE_TYPE.get(curveType) : SOIL_CURVE_TYPE.get(curveType));
@@ -88,4 +88,6 @@ public class SensorService {
             throw new RuntimeException("Error sensorType input! Please check what you entered!");
         }
     }
+
+
 }

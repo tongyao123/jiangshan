@@ -4,7 +4,7 @@
     <!--    党员总数-->
     <select id="getPartyMembersNumber" parameterType="java.lang.String" resultType="java.lang.Integer">
         SELECT count(1) FROM t_part_people a LEFT JOIN t_people b ON a.id=b.obj_id
-        <where>
+        <where> b.now_add!='' and a.party_post!='预备党员'
             <if test=" town != '' and town!= null ">
                 and b.town = #{town}
             </if>
@@ -41,14 +41,28 @@
     <select id="partyCoordinate" parameterType="java.lang.String" resultType="java.util.HashMap">
         SELECT
         b.name,b.longitude,b.latitude,b.now_add,a.in_department,b.sex,DATE_FORMAT(a.party_membership_time,'%Y年%m月%d日')
-        as party_membership_time,b.date_of_birth,b.native_place,b.most_education,b.img FROM t_part_people a LEFT JOIN
-        t_people b ON a.id=b.obj_id
-        <where>b.longitude is not null and b.latitude is not null and b.now_add!=''
+        as party_membership_time,b.date_of_birth,b.native_place,b.most_education,b.img,a.id FROM t_part_people a
+        left join t_people b ON a.id=b.obj_id
+        <where>
+            b.longitude is not null and b.longitude!='' and b.latitude is not null and b.latitude !='' and
+            b.now_add!=''
             <if test=" town != '' and town!= null ">
                 and b.town = #{town}
             </if>
             <if test=" village != '' and village!= null">
                 and b.village = #{village}
+            </if>
+        </where>
+    </select>
+    <select id="partyProdcutList" parameterType="java.lang.String" resultType="java.util.HashMap">
+        SELECT
+        bp.`name` as product_name,bp.linkman as linkman FROM  t_part_people b
+        left join t_help  c on b.id=c.people_id
+        left join  base_shop d on d.id=c.shop_id
+        left join t_product bp on bp.id=d.product_id
+        <where>
+            <if test=" id != '' and id!= null ">
+                b.id=#{id}
             </if>
         </where>
     </select>
@@ -59,5 +73,11 @@
                 and tom_id = #{town}
             </if>
         </where>
+    </select>
+    <select id="taskList" parameterType="java.lang.String" resultType="java.util.HashMap">
+        select bp.`name`,concat(IFNULL(DATE_FORMAT(tck.release_time,'%Y年%m月%d日'),""),task_title) as task
+        from t_corr_task tck
+        left join t_part_people bpp on bpp.id=tck.responsible_person
+        left join t_people bp on bp.obj_id=bpp.id ORDER BY task_id desc
     </select>
 </mapper>

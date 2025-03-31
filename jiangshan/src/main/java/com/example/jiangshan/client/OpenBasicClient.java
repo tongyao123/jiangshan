@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import com.example.jiangshan.client.response.*;
+import com.example.jiangshan.client.response.StorePageResponse;
 import com.example.jiangshan.controller.param.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -66,6 +67,7 @@ public class OpenBasicClient extends BasicClient {
 
     private static final String OPEN_BASIC_CARD_LIST = "/api/v1/open/basic/cards/list?employeeNo=#{employeeNo}&pageNo=#{pageNo}&pageSize=#{pageSize}";
 
+    private static final String OPEN_BASIC_STORE_LIST = "/v1/customization/storeInfo?pageNo={pageNo}&pageSize={pageSize}&storeNo={storeNo}";
     @Value("${OPEN_URL}")
     private String host;
     @Autowired
@@ -228,4 +230,15 @@ public class OpenBasicClient extends BasicClient {
         return data.getRows();
     }
 
+    public List<StorePageResponse.StorePage.StoreRow> listStore() {
+
+        HttpEntity<String> request = new HttpEntity<>(null, getHttpHeaders());
+        URI url = HttpHelper.buildURI(OPEN_BASIC_STORE_LIST, false, "1", "10");
+        ResponseEntity<StorePageResponse> openResult = openRestTemplate.exchange(host + url, HttpMethod.GET, request,
+                StorePageResponse.class);
+        log.info("listStore, basicResponse:{}", openResult);
+        Assert.isTrue(BasicResponse.isSuccess(openResult.getBody()), ExceptionEnum.GET_DATA_ERROR);
+        StorePageResponse.StorePage data = openResult.getBody().getData();
+        return data.getRows();
+    }
 }

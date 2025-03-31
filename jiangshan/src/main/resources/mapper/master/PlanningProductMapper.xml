@@ -15,7 +15,9 @@
         left join t_product  b on a.id = b.obj_id
         <where>
             (a.plant = '1' or a.plant = '3')
+            and b.type =10
             and type_in_future = #{typeInFuture}
+            and b.delete_status='01'
             <if test=" town != '' and town!= null ">
                 and b.town = #{town}
             </if>
@@ -32,7 +34,7 @@
         FROM t_future_product a right join t_investment_history b
         on a.id=b.product_id left join t_product c on a.id= c.obj_id
             <where>
-        (a.plant = '1' or a.plant = '3')
+        (a.plant = '1' or a.plant = '3') and c.delete_status='01'
         <if test=" town != '' and town!= null ">
             and c.town = #{town}
         </if>

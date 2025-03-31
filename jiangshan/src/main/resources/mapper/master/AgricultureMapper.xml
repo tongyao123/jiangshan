@@ -2,11 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.example.jiangshan.mapper.master.AgricultureMapper">
     <select id="plantation" resultType="java.util.HashMap">
-        SELECT count(1) as amount, if(sum(a.area) is null,0,sum(a.area)) as area,if(sum(b.worker_num) is null,0,sum(b.worker_num)) as worker_num
+        SELECT count(1) as amount, if(sum(a.area) is null,0,round(sum(a.area),2)) as area,cast(if(sum(b.worker_num) is null,0,sum(b.worker_num)) as SIGNED) as worker_num
         FROM t_product a
         inner join
         t_planting_industry b on a.obj_id = b.id
         <where>
+            a.type='13' and a.delete_status='01'
             <if test=" town != '' and town!= null ">
                 and a.town = #{town}
             </if>
@@ -17,11 +18,11 @@
     </select>
 
     <select id="farm" resultType="java.util.HashMap">
-        SELECT count(1) as amount,if(sum(a.area) is null,0,sum(a.area)) as area,if(sum(b.worker_num) is null,0,sum(b.worker_num)) as worker_num
+        SELECT count(1) as amount,if(sum(a.area) is null,0,round(sum(a.area),2)) as area,cast(if(sum(b.worker_num) is null,0,sum(b.worker_num)) as SIGNED) as worker_num
         FROM t_product a
                  inner join t_cultivation b on a.obj_id = b.id
-
         <where>
+            a.type='11' and a.delete_status='01'
             <if test=" town != '' and town!= null ">
                 and a.town = #{town}
             </if>
@@ -33,9 +34,10 @@
     </select>
 
     <select id="tea" resultType="java.util.HashMap">
-        select count(1) as amount,if(sum(b.area) is null,0,sum(b.area)) as area, if(sum(ylut * b.area) is null,0, sum(ylut * b.area)) as yield
-        from t_tea b inner join t_product a on b.id=a.obj_id
+        select count(1) as amount,if(sum(a.area) is null,0,round(sum(a.area),2)) as area, if(sum(ylut * b.area) is null,0, round(sum(ylut * b.area),2)) as yield
+        from t_tea b right join t_product a on b.id=a.obj_id
         <where>
+            a.type='8' and a.delete_status='01'
             <if test=" town != '' and town!= null ">
                 and a.town = #{town}
             </if>
@@ -48,18 +50,36 @@
 
     <select id="selectAgricultureDetailList" resultType="java.util.HashMap">
         select id,
-        case type when 8 then '斜背茶' when 11 then '养殖场' when 12 then '果园/茶园' when 13 then '种植场' end as type,
+        case type when 1 then '加工厂' when 8 then '特产品' when 11 then '养殖业' when 12 then '果园/茶园' when 13 then '种植业' end as typeName,
+        type,
         name,
         address,
+        if(area = 0, '', area) as area,
         if(details is null, '', details) as details,
         addArr,
+        linkman,
+        tel,
         longitude,
         latitude,
         image,
         if(video is null, '', video) as video,
-        if(vRaddress is null, '', vRaddress) as vRaddress
-        from t_product a
-        <where>type in (8, 11, 12, 13)
+        if(vRaddress is null, '', vRaddress) as vRaddress,
+        if(camera_address is null, '', camera_address) as camera_address
+        from t_product  a
+        <where> type in (1,8, 11, 12, 13) and a.delete_status='01'
+            <if test=" town != '' and town!= null ">
+                and a.town = #{town}
+            </if>
+            <if test=" village != '' and village!= null">
+                and a.village = #{village}
+            </if>
+        </where>
+    </select>
+    <select id="factory" resultType="java.util.HashMap">
+        SELECT count(1) as amount,if(sum(a.area) is null,0,round(sum(a.area),2)) as area,if(sum(b.workernum) is null,0,sum(b.workernum)) as worker_num
+        FROM t_product a
+        inner join t_factory b on a.obj_id = b.id
+        <where> a.type = 1 and a.delete_status='01'
             <if test=" town != '' and town!= null ">
                 and a.town = #{town}
             </if>

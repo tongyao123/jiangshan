@@ -14,7 +14,7 @@ import java.security.PrivateKey;
 import java.security.Signature;
 import java.util.Base64;
 
-import static com.example.jiangshan.config.JSAPI.*;
+import static com.example.jiangshan.config.BaseConfig.*;
 
 @Service
 public class MallOnlineService {

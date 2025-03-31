@@ -3,44 +3,53 @@
 <mapper namespace="com.example.jiangshan.mapper.master.CulturalTourismMapper">
     <select id="tourismDetailList" parameterType="java.lang.String" resultType="java.util.HashMap">
         select id,
-        case type  when 5 then '康养基地' when 6 then '酒店/民宿' when 7 then '餐饮' when 9 then '旅游景点' end as type,
+        case type when 5 then '康养基地' when 6 then '酒店/民宿' when 7 then '餐饮' when 9 then '旅游景点' when 15 then '休闲'  when 16 then '服务点'  end as typeName,
+        type,
         area,
         name,
-        address,
+        if(address is null, '', address) as address,
         if(details is null, '', details) as details,
-        addArr,
+        if(addArr is null, '', addArr) as addArr,
+        linkman,
+        tel,
         longitude,
         latitude,
         image,
         if(video is null, '', video) as video,
-        if(vRaddress is null, '', vRaddress) as vRaddress
+        if(vRaddress is null, '', vRaddress) as vRaddress,
+        if(camera_address is null, '', camera_address) as camera_address
         from t_product
         <where>
-            type in (5, 6, 7, 9)
+            type in (5, 6, 7, 9,15,16) and delete_status='01'
             <if test=" town != '' and town!= null ">
                 and town = #{town}
             </if>
             <if test=" village != '' and village!= null">
                 and village = #{village}
             </if>
+            order by LPAD(type, 2, '0')
         </where>
     </select>
     <select id="culturalDetailList" resultType="java.util.HashMap">
         select id,
-        case type when 4 then '文化底蕴' end as type,
+        case type when 4 then '文化底蕴' end as typeName,
+        type,
         area,
         name,
         address,
         if(details is null, '', details) as details,
         addArr,
+        linkman,
+        tel,
         longitude,
         latitude,
         image,
         if(video is null, '', video) as video,
-        if(vRaddress is null, '', vRaddress) as vRaddress
+        if(vRaddress is null, '', vRaddress) as vRaddress,
+        if(camera_address is null, '', camera_address) as camera_address
         from t_product
         <where>
-            type = 4
+            type = 4 and delete_status='01'
             <if test=" town != '' and town!= null ">
                 and town = #{town}
             </if>
@@ -52,7 +61,7 @@
     <select id="CulturalTourismCount" resultType="java.lang.Integer">
         select count(1) from t_product
         <where>
-            type= #{productType}
+            type= #{productType} and delete_status='01'
             <if test=" town != '' and town!= null ">
                 and town = #{town}
             </if>
@@ -64,8 +73,9 @@
     <select id="getTurnoverList" resultType="java.util.HashMap">
         SELECT DATE_FORMAT(order_time, '%Y-%m') AS orderTime, ROUND(SUM(order_total), 2) AS orderTotal
         FROM t_consumption a
-                 left join t_product b on a.product_id = b.id
+        left join t_product b on a.product_id = b.id
         <where>
+            b.delete_status='01'
             <if test=" town != '' and town!= null ">
                 and b.town = #{town}
             </if>

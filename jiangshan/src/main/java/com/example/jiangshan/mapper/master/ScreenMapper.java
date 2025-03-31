@@ -50,4 +50,20 @@ public interface ScreenMapper {
     * @Description: 根据传入的城镇编码，返回对应城镇下所属的村
     */
     List<HashMap<String, ?>> selectVillageList(@Param("town") String town);
+    /**
+    * @Date: 2024/3/25
+    * @Author: Xiao Lee
+    * @Param: [town]
+    * @Return: java.util.List<java.util.HashMap<java.lang.String,?>>
+    * @Description: ScreenMapper.java
+    */
+    String selectVillageProduct(@Param("village") String village);
+    /**
+    * @Date: 2024/3/25
+    * @Author: Xiao Lee
+    * @Param: [Town]
+    * @Return: java.lang.String
+    * @Description: ScreenMapper.java
+    */
+    String selectTownProduct(@Param("town") String town);
 }

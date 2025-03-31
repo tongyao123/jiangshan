@@ -1,11 +1,7 @@
 package com.example.jiangshan.service.master.wechat;
 
-import com.example.jiangshan.config.JSAPI;
 import com.wechat.pay.contrib.apache.httpclient.util.PemUtil;
-import com.wechat.pay.java.core.Config;
-import com.wechat.pay.java.core.RSAAutoCertificateConfig;
 import com.wechat.pay.java.core.util.NonceUtil;
-import com.wechat.pay.java.service.partnerpayments.jsapi.JsapiServiceExtension;
 import com.wechat.pay.java.service.payments.jsapi.JsapiService;
 import com.wechat.pay.java.service.payments.jsapi.model.Amount;
 import com.wechat.pay.java.service.payments.jsapi.model.Payer;
@@ -17,9 +13,8 @@ import java.math.BigDecimal;
 import java.security.PrivateKey;
 import java.security.Signature;
 import java.util.Base64;
-import java.util.UUID;
 
-import static com.example.jiangshan.config.JSAPI.*;
+import static com.example.jiangshan.config.BaseConfig.*;
 
 @Service
 public class MallSelfService {

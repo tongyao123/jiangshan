@@ -9,14 +9,14 @@
         else '未明确状态项目' end as typeInFuture,
         count(1) as num,
         DATE_FORMAT(now(), '%Y') as investTime,
-        sum(b.invest_amount) as investAmount
-        from  t_investment_history b
-        left join t_future_product a on a.id = b.product_id
+        sum(a.fund_amount) as investAmount
+        from t_future_product a
         left join t_product as c on a.id = c.obj_id
         <where>
             (a.plant = '2' or a.plant = '3')
-            and DATE_FORMAT(b.invest_time, '%Y') = DATE_FORMAT(now(), '%Y')
-            and type_in_future = '2'
+            and c.type =10
+            and type_in_future = #{typeInFuture}
+            and c.delete_status='01'
             <if test=" town != '' and town!= null ">
                 and c.town = #{town}
             </if>
@@ -24,9 +24,7 @@
                 and c.village = #{village}
             </if>
         </where>
-
         GROUP BY type_in_future
-
     </select>
     <select id="selectAttractInvestmentList" resultType="java.util.HashMap">
         SELECT count(1) AS number,
@@ -36,6 +34,7 @@
         on a.id=b.product_id left join t_product as c on a.id= c.obj_id
         <where>
             (a.plant='2' or a.plant='3')
+            and c.delete_status='01'
             <if test=" town != '' and town!= null ">
                 and c.town = #{town}
             </if>
@@ -46,46 +45,72 @@
         group by DATE_FORMAT(b.invest_time, '%Y-%m'), DATE_FORMAT(b.invest_time, '%m') limit 10, 6
     </select>
     <select id="selectAttractInvestmentDetailList" resultType="java.util.HashMap">
-        select id,case type when 10 then '规划招商资产' end as type,area,name,address,if(details is null,'',details ) as
-        details,addArr,longitude,latitude,image,if(video is null,'',video ) as video,if(vRaddress is null,'',vRaddress )
-        as vRaddress from t_product
+        select a.id,case a.type when 10 then '规划招商资产' end as typeName,
+        a.type,
+        a.area,
+        a.name,
+        address,
+        details,
+        addArr,
+        longitude,
+        latitude,
+        image,
+        if(linkman is null or linkman='', '智数创农代管', linkman) as linkman,
+        if(tel is null or tel='', '15359918711', tel) as tel,
+        if(video is null, '', video) as video,
+        if(vRaddress is null, '', vRaddress) as vRaddress,
+        if(camera_address is null, '', camera_address) as camera_address
+        from t_product a
+        inner join t_future_product b on a.obj_id = b.id
         <where>
-            type=10
+            a.type=10
+            and a.delete_status='01'
             <if test=" town != '' and town!= null ">
-                and town = #{town}
+                and a.town = #{town}
             </if>
             <if test=" village != '' and village!= null">
-                and village = #{village}
+                and a.village = #{village}
             </if>
         </where>
     </select>
-    <select id="selectVillageAttractInvestmentCoordinate" parameterType="java.lang.String" resultType="java.util.HashMap">
-        select a.id,case a.type when 10 then '规划招商资产' end as type,
-               area,
-               a.name,
-               address,
-               details,
-               addArr,
-               longitude,
-               latitude,
-               image,
-               if(video is null, '', video)          as video,
-               if(vRaddress is null, '', vRaddress)  as vRaddress
+    <select id="selectVillageAttractInvestmentCoordinate" parameterType="java.lang.String"
+            resultType="java.util.HashMap">
+        select a.id,case a.type when 10 then '规划招商资产' end as typeName,
+        a.type,
+        a.area,
+        a.name,
+        address,
+        details,
+        addArr,
+        longitude,
+        latitude,
+        image,
+        if(linkman is null or linkman='', '智数创农代管', linkman) as linkman,
+        if(tel is null or tel='', '15359918711', tel) as tel,
+        if(video is null, '', video) as video,
+        if(vRaddress is null, '', vRaddress) as vRaddress,
+        if(camera_address is null, '', camera_address) as camera_address
         from t_product a
-                 left join t_future_product b on a.obj_id = b.id
-        where a.type = 10
-          and b.village = #{village}
+        inner join t_future_product b on a.obj_id = b.id
+        <where>
+            a.type = 10
+            and a.delete_status='01'
+            <if test=" village != '' and village!= null">
+                and b.village = #{village}
+            </if>
+        </where>
     </select>
 
     <select id="selectVillageList" parameterType="java.lang.String" resultType="java.util.HashMap">
         SELECT a.id, a.com_village, sum(c.area) as area, sum(b.fund_amount) as fund_amount
         FROM t_future_product b
-                 LEFT JOIN `t_village` a on b.village = a.id
-                 LEFT JOIN t_product c on b.id = c.obj_id
+        LEFT JOIN `t_village` a on b.village = a.id
+        LEFT JOIN t_product c on b.id = c.obj_id
         GROUP BY a.id
+        <where>
+            c.delete_status='01'
+        </where>
     </select>
-
-
 
 
 </mapper>

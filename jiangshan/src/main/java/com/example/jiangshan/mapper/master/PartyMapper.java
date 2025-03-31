@@ -35,7 +35,7 @@ public interface PartyMapper {
      * @Description: 不同类型荣誉数量统计
      */
 
-    Integer getTypeOfGloryNumber(String type,@Param("town") String town, @Param("village") String village);
+    Integer getTypeOfGloryNumber(String type, @Param("town") String town, @Param("village") String village);
 
     /**
      * @Date: 2023/10/14
@@ -48,11 +48,28 @@ public interface PartyMapper {
     List<HashMap> partyCoordinate(@Param("town") String town, @Param("village") String village);
 
     /**
-    * @Date: 2023/10/14
-    * @Author: Xiao Lee
-    * @Param: []
-    * @Return: java.util.List<java.util.HashMap>
-    * @Description: PartyMapper.java
-    */
+     * @Date: 2024/8/28
+     * @Author: Xiao Lee
+     * @Param: [town, village]
+     * @Return: java.util.List<java.util.HashMap>
+     * @Description: 党员帮扶资产列表
+     */
+    List partyProdcutList(@Param("id") String id);
+
+    /**
+     * @Date: 2023/10/14
+     * @Author: Xiao Lee
+     * @Param: []
+     * @Return: java.util.List<java.util.HashMap>
+     * @Description: PartyMapper.java
+     */
     List<HashMap> polictList(@Param("town") String town);
+    /**
+    * @Date: 2024/8/30
+    * @Author: Xiao Lee
+    * @Param: [town]
+    * @Return: java.util.List<java.util.HashMap>
+    * @Description:帮扶记录查询
+    */
+    List<HashMap> taskList();
 }

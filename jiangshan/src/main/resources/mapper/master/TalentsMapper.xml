@@ -45,7 +45,8 @@
         SELECT
         b.name,b.now_add,b.longitude,b.latitude,b.sex,a.is_party,b.native_place,b.most_school,a.now_work_address,b.img
         FROM t_talents a LEFT JOIN t_people b ON a.id=b.obj_id
-        <where>b.longitude is not null and b.latitude is not null and b.now_add!=''
+        <where> b.longitude is not null and b.longitude!='' and b.latitude is not null and b.latitude !='' and
+            b.now_add!=''
             <if test=" town != '' and town!= null ">
                 and b.town = #{town}
             </if>

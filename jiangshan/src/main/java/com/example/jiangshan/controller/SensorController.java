@@ -29,7 +29,7 @@ public class SensorController {
     @ResponseBody
     @RequestMapping("/getSensorIDList")
     public List<String> getSensorIDList(@Param("sensorType") String sensorType) throws Exception {
-        return sensorService.getSensorIdList(sensorType);
+        return sensorService.selectSensorIdList(sensorType);
     }
 
 
@@ -53,7 +53,7 @@ public class SensorController {
     @ResponseBody
     @RequestMapping("/getSensorCurve")
     public List<HashMap> getSensorCurve(@Param("sensorType") String sensorType, @Param("sensorId") String sensorId, @Param("curveType") String curveType) {
-        return sensorService.getSensorCurve(sensorType, sensorId, curveType);
+        return sensorService.selectSensorCurve(sensorType, sensorId, curveType);
     }
 
 

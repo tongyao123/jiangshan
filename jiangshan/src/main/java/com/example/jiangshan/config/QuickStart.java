@@ -1,6 +1,5 @@
 package com.example.jiangshan.config;
 
-import com.example.jiangshan.config.JSAPI;
 import com.wechat.pay.java.core.Config;
 import com.wechat.pay.java.core.RSAAutoCertificateConfig;
 import com.wechat.pay.java.service.payments.jsapi.JsapiService;
@@ -13,13 +12,13 @@ import com.wechat.pay.java.service.payments.jsapi.model.PrepayResponse;
 public class QuickStart {
 
   /** 商户号 */
-  public static String merchantId = JSAPI.merchantId;
+  public static String merchantId = BaseConfig.honggutianmerchantId;
   /** 商户API私钥路径 */
-  public static String privateKeyPath = JSAPI.privateKeyPath;
+  public static String privateKeyPath = BaseConfig.honggutianaprivateKeyPath;
   /** 商户证书序列号 */
-  public static String merchantSerialNumber = JSAPI.merchantSerialNumber;
+  public static String merchantSerialNumber = BaseConfig.honggutianmerchantSerialNumber;
   /** 商户APIV3密钥 */
-  public static String apiV3key = JSAPI.apiV3key;
+  public static String apiV3key = BaseConfig.honggutianapiV3key;
 
   public static void main(String[] args) {
     // 使用自动更新平台证书的RSA配置
@@ -37,13 +36,13 @@ public class QuickStart {
     Amount amount = new Amount();
     amount.setTotal(100);
     request.setAmount(amount);
-    request.setAppid(JSAPI.jiangshanAppId);
+    request.setAppid(BaseConfig.honggutianAppId);
     request.setMchid(merchantId);
     request.setDescription("测试商品标题");
     request.setNotifyUrl("https://www.weixin.qq.com/wxpay/pay.php");
-    request.setOutTradeNo("out_trade_no_012");
+    request.setOutTradeNo("out_trade_no_013");
     Payer payer = new Payer();
-    payer.setOpenid("o18cr5WOEt64u1l1Aud_iAOXd8TI");
+    payer.setOpenid("o7FD46zIM5l8xuqmOq_Kks_UkyJY");
     request.setPayer(payer);
     PrepayResponse response = service.prepay(request);
     System.out.println(response.getPrepayId());

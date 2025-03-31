@@ -52,12 +52,27 @@ public class PartyService {
     }
 
     public List partyCoordinate(@Param("town") String town, @Param("village") String village) {
-        return partyMapper.partyCoordinate(town, village);
+        List<HashMap> partyCoordinate = partyMapper.partyCoordinate(town, village);
+        for(int partyIndex = 0;partyIndex<partyCoordinate.size();partyIndex++){
+            HashMap party=partyCoordinate.get(partyIndex);
+            party.put("partyProdcutList",partyProdcutList(party.get("id")+""));
+        }
+        return partyCoordinate;
+    }
+
+    public  List  partyProdcutList(@Param("id") String id){
+
+        return partyMapper.partyProdcutList(id);
     }
 
     public  List  polictList(@Param("town") String town){
 
         return partyMapper.polictList(town);
+    }
+
+    public  List  taskList(){
+
+        return partyMapper.taskList();
     }
 
 }

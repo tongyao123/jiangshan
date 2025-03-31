@@ -2,6 +2,7 @@ package com.example.jiangshan.controller;
 
 import com.example.jiangshan.entity.CulturalTourismStatistics;
 import com.example.jiangshan.service.master.screen.*;
+import com.example.jiangshan.service.supply.FarmService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.*;
@@ -22,8 +23,9 @@ public class ScreenMessageController {
     private final TalentsService talentsService;
     private final PlanningProductService planningProductService;
     private final ScreenService screenService;
+    private final FarmService farmService;
 
-    public ScreenMessageController(AgricultureService agricultureService, CulturalTourismService culturalTourismService, AttractInvestmentService attractInvestmentService, PartyService partyService, TalentsService talentsService, PlanningProductService planningProductService, ScreenService screenService) {
+    public ScreenMessageController(AgricultureService agricultureService, CulturalTourismService culturalTourismService, AttractInvestmentService attractInvestmentService, PartyService partyService, TalentsService talentsService, PlanningProductService planningProductService, ScreenService screenService, FarmService farmService) {
         this.agricultureService = agricultureService;
         this.culturalTourismService = culturalTourismService;
         this.attractInvestmentService = attractInvestmentService;
@@ -31,6 +33,7 @@ public class ScreenMessageController {
         this.talentsService = talentsService;
         this.planningProductService = planningProductService;
         this.screenService = screenService;
+        this.farmService = farmService;
     }
 
     @ResponseBody
@@ -38,6 +41,7 @@ public class ScreenMessageController {
     public HashMap<String, Object> getAgricultureStatistics(@RequestParam(required = false, value = "town") String town, @RequestParam(required = false, value = "village") String village) {
         return agricultureService.agricultureStatistics(town, village);
     }
+
 
     @ResponseBody
     @RequestMapping(value = "/getCulturalTourismStatistics")
@@ -76,6 +80,11 @@ public class ScreenMessageController {
         System.out.println(town + "---------------------------------" + village);
         System.out.println("end----------------------------------------------------------------");
         return agricultureService.selectAgricultureDetailList(town, village);
+    }
+    @ResponseBody
+    @RequestMapping(value = "/getFarmCoordinate")
+    public List getFarmDetailList(@RequestParam(required = false, value = "town") String town, @RequestParam(required = false, value = "village") String village) {
+        return farmService.selectFarmList(town, village);
     }
 
     @ResponseBody
@@ -121,7 +130,11 @@ public class ScreenMessageController {
     public List getPolict(@Param("town") String town) {
         return partyService.polictList(town);
     }
-
+    @ResponseBody
+    @RequestMapping(value = "/getTaskList")
+    public List getTaskList() {
+        return partyService.taskList();
+    }
     @ResponseBody
     @RequestMapping(value = "/getTalentsCoordinate")
     public List getTalentsCoordinate(@Param("town") String town,@Param("village") String village) {
@@ -178,8 +191,18 @@ public class ScreenMessageController {
     public String doIt() {
         return "I will try !";
     }
-
-
+    @ResponseBody
+    @RequestMapping("/notice")
+    public String notice(@RequestParam("code") String code,
+                         @RequestParam("date") String date,
+                         @RequestParam("msg") String msg,
+                         @RequestParam("sign") String sign,
+                         @RequestParam("version") String version,
+                         @RequestParam("result") String result) {
+        String notice = "name：" + code + "\ndate：" + date+"\nmsg：" + msg+"\nsign：" + sign + "\nversion：" + version+ "\nresult：" + result;
+        System.out.println(notice);
+        return notice;
+    }
 }
 
 

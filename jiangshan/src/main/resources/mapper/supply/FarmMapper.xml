@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.jiangshan.mapper.supply.FarmMapper">
+    <select id="selectFarmBasisList" parameterType="java.lang.String" resultType="java.util.HashMap">
+        select farm_id,species,case farm_type when 00 then "种植农场" when 01 then "养殖农场" else "种植农场" end as typeName,
+        case farm_type when 00 then "13" when 01 then "11" else "13" end as type,garden_range,
+        farm_code as id,partition_code as partitionCode,farm_name as name,if(farm_phone
+        ="","暂无",farm_phone) as tel,farm_man,
+        if(c.`name` = "" or c.`name` is null,if(b.liaison = "" or b.liaison is null,if(farm_man = "" or farm_man is null,"暂无",farm_man),b.liaison),c.`name`) as linkman,
+        c.`name`,if(produce_name ="","集体资产",produce_name)
+        as produce_name,concat(farm_area,'亩') as area ,farm_address as
+        address,a.details,garden_color as color,substring_index(latitude,',',1) as longitude,
+        substring_index(latitude,',',-1) as
+        latitude,if(a.vRaddress is null,"",a.vRaddress) as vRaddress,b.shop_video,b.shop_head from base_farm a inner join base_shop
+        b on a.farmer=b.userId left join sys_user_info c on a.farm_man=c.userId
+        <where >
+            a.delete_status='01' and b.examine_status="02"
+            <if test=" town != '' and town!= null ">
+                and  b.town = #{town}
+            </if>
+            <if test=" village != '' and village!= null">
+                and a.farm_village = #{village}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectFarmPicture" parameterType="java.lang.String" resultType="java.lang.String">
+        select pp.picture_content from base_farm f left join base_picture pp on f.farm_code=pp.belong_id
+        <where>
+            pp.all_type='97' and NOT ISNULL(pp.picture_content)
+            <if test=" farm_code != '' and farm_code!= null ">
+                and f.farm_id= #{farm_code}
+            </if>
+        </where>
+    </select>
+    <select id="selectFarmCoordinate" parameterType="java.lang.String" resultType="java.util.HashMap">
+        select cast(longitude as DECIMAL(20,15)) as lng,cast(latitude as DECIMAL(20,15)) as lat from
+        longitude_latitude_data
+        <where>
+            type='01'
+            <if test=" code != '' and code!= null ">
+                and code=#{code}
+            </if>
+            <if test=" partition_code != '' and partition_code!= null ">
+                and partition_code=#{partition_code}
+            </if>
+        </where>
+        order by index_
+    </select>
+    <select id="selectFarmStatistics" parameterType="java.lang.String" resultType="java.util.HashMap">
+        select count(*) as quantity,cast(if(sum(farm_area) is null, '0', sum(farm_area)) as decimal(9,2)) as
+        area,cast(if(sum(farm_scale) is null, '0', sum(farm_scale)) as SIGNED) as farm_scale from base_farm a inner join
+        base_shop b on a.farmer=b.userId
+        <where>
+            a.delete_status='01'
+            <if test=" farm_type != '' and farm_type!= null ">
+                and a.farm_type = #{farm_type}
+            </if>
+            <if test=" farm_type == '' ">
+                and a.farm_type != "00" and a.farm_type != "01"
+            </if>
+            <if test=" town != '' and town!= null ">
+                and a.farm_town = #{town}
+            </if>
+            <if test=" village != '' and village!= null">
+                and a.farm_village = #{village}
+            </if>
+        </where>
+    </select>
+
+
+</mapper>

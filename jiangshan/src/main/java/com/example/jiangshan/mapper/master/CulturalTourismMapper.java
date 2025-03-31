@@ -13,7 +13,7 @@ public interface CulturalTourismMapper {
 
     List<HashMap> getTurnoverList(@Param("town")String town, @Param("village") String village);
 
-    List<HashMap>  culturalDetailList(@Param("town")String town, @Param("village") String village);
+    List<HashMap> culturalDetailList(@Param("town")String town, @Param("village") String village);
 
     List<HashMap> tourismDetailList(@Param("town")String town, @Param("village") String village);
 }

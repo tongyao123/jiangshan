@@ -26,7 +26,7 @@ public class ScreenService implements ScreenMapper {
     private static final List<String> COLOR_LIST = Arrays.asList(
             "#0099CC", "#FFFFEE", "#AA66CC", "#50F350", "#99CC00", "#669900",
             "#FFBB33", "#FF8800", "#FF4444", "#CC0000", "#BF00FF", "#DA9669",
-            "#E3CEF6", "#73c0de", "#fc8452", "#9a60b4", "#ea7ccc"
+            "#E3CEF6", "#73c0de", "#fc8452", "#9a60b4", "#ea7ccc","#ffff99"
     );
 
     public ScreenService(ScreenMapper screenMapper) {
@@ -60,9 +60,11 @@ public class ScreenService implements ScreenMapper {
     @Override
     public List<HashMap<String, Object>> selectScreenCoordinate(@Param("town") String town, @Param("village") String village) {
         List<HashMap<String, Object>> screenCoordinate = screenMapper.selectScreenCoordinate(town, village);
-        for (HashMap<String, Object> screenCoordinateItem : screenCoordinate) {
-            int index = LongToInteger(screenCoordinateItem.get("type"));
-            screenCoordinateItem.put("color", COLOR_LIST.get(index));
+        if (screenCoordinate.size() > 0) {
+            for (HashMap<String, Object> screenCoordinateItem : screenCoordinate) {
+                int index = LongToInteger(screenCoordinateItem.get("type"))-1;
+                screenCoordinateItem.put("color", COLOR_LIST.get(index));
+            }
         }
         return screenCoordinate;
     }
@@ -95,5 +97,37 @@ public class ScreenService implements ScreenMapper {
             throw new RuntimeException("Empty town input! Please check what you entered!");
         }
         return screenMapper.selectVillageList(town);
+    }
+
+    /**
+     * @param village
+     * @Date: 2024/3/25
+     * @Author: Xiao Lee
+     * @Param: [town]
+     * @Return: java.util.List<java.util.HashMap < java.lang.String, ?>>
+     * @Description: ScreenMapper.java
+     */
+    @Override
+    public String selectVillageProduct(@Param("village") String village) {
+        if (village == null || village.length() == 0) {
+            throw new RuntimeException("Empty town input! Please check what you entered!");
+        }
+        return screenMapper.selectVillageProduct(village);
+    }
+
+    /**
+     * @param town
+     * @Date: 2024/3/25
+     * @Author: Xiao Lee
+     * @Param: [Town]
+     * @Return: java.lang.String
+     * @Description: ScreenMapper.java
+     */
+    @Override
+    public String selectTownProduct(@Param("town") String town) {
+        if (town == null || town.length() == 0) {
+            throw new RuntimeException("API SelectTownProduct empty town input! Please check what you entered!");
+        }
+        return screenMapper.selectTownProduct(town);
     }
 }
